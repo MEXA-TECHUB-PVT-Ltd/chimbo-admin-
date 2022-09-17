@@ -26,3 +26,6 @@ export const userChangePassword = yup.object().shape({
 	password: yup.string().required("Password Required").min(4).max(18),
 	ID: yup.string().required("ID Required").min(20, "ID must be valid").max(26, "ID must be valid")
 });
+
+
+
