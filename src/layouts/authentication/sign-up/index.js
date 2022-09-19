@@ -74,16 +74,14 @@ function Cover() {
           bgColor="info"
           borderRadius="lg"
           coloredShadow="success"
-          mx={2}
-          mt={-3}
+          mx={3}
+          mt={-11}
           p={3}
-          mb={1}
+          mb={0}
           textAlign="center"
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Join us today
-          </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
+
+          <MDTypography display="block" variant="button" color="white" my={2}>
             Enter your email and password to register
           </MDTypography>
         </MDBox>

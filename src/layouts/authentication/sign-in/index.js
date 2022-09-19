@@ -48,7 +48,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [error, setError] = useState("");
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const navigate = useNavigate();
   const initialValues = {
@@ -70,6 +70,7 @@ function Basic() {
       }
       catch (e) {
         console.log(e.response.data);
+        setError(e.response.data.message);
       }
     }
   })
@@ -126,6 +127,9 @@ function Basic() {
               </MDTypography>
             </MDBox>
           </MDBox>
+          {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px", textAlign: "center" }} my={1}>
+            {error}
+          </Typography>}
         </MDBox>
       </Card>
     </BasicLayout>

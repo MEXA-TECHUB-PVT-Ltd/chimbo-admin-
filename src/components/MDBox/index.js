@@ -30,6 +30,7 @@ const MDBox = forwardRef(
     />
   )
 );
+console.log(MDBox);
 
 // Setting default values for the props of MDBox
 MDBox.defaultProps = {

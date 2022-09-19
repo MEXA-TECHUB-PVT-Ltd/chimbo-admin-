@@ -13,6 +13,15 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 /*eslint-disable*/
+import Dashboard from "layouts/dashboard";
+import Tables from "layouts/tables";
+import Billing from "layouts/billing";
+import RTL from "layouts/rtl";
+import Notifications from "layouts/notifications";
+import Profile from "layouts/profile";
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
+import Listing from "layouts/ListingForm"
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
@@ -49,7 +58,7 @@ import routes from "routes";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 import { useFormik } from "formik";
-
+import { BasicGrid } from "./BasicGrid"
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
@@ -129,29 +138,29 @@ export default function App() {
       return null;
     });
 
-  const configsButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="50%"
-      position="fixed"
-      right="2rem"
-      bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpen}
-    >
-      <Icon fontSize="small" color="inherit">
-        settings
-      </Icon>
-    </MDBox>
-  );
+  // const configsButton = (
+  //   // <MDBox
+  //   //   display="flex"
+  //   //   justifyContent="center"
+  //   //   alignItems="center"
+  //   //   width="3.25rem"
+  //   //   height="3.25rem"
+  //   //   bgColor="white"
+  //   //   shadow="sm"
+  //   //   borderRadius="50%"
+  //   //   position="fixed"
+  //   //   right="2rem"
+  //   //   bottom="2rem"
+  //   //   zIndex={99}
+  //   //   color="dark"
+  //   //   sx={{ cursor: "pointer" }}
+  //   //   onClick={handleConfiguratorOpen}
+  //   // >
+  //   //   <Icon fontSize="small" color="inherit">
+  //   //     settings
+  //   //   </Icon>
+  //   // </MDBox>
+  // );
 
   //  direction === "rtl" ? (
   //   <CacheProvider value={rtlCache}>
@@ -179,27 +188,51 @@ export default function App() {
   //     </ThemeProvider>
   //   </CacheProvider>
   // ) : (
-  return (<ThemeProvider theme={darkMode ? themeDark : theme}>
-    <CssBaseline />
-    {layout === "dashboard" && (
-      <>
-        <Sidenav
-          color={sidenavColor}
-          brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-          brandName="Material Dashboard 2"
-          routes={routes}
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
-        />
-        <Configurator />
-        {configsButton}
-      </>
-    )}
-    {layout === "vr" && <Configurator />}
-    <Routes>
-      {getRoutes(routes)}
-      <Route path="*" element={<Navigate to="/dashboard" />} />
-    </Routes>
-  </ThemeProvider>
+  return (
+    <ThemeProvider theme={darkMode ? themeDark : theme}>
+      <CssBaseline />
+      {layout === "dashboard" && (
+        <>
+          <Sidenav
+            color={sidenavColor}
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+            brandName="Chimbo Admin Panel"
+            routes={routes}
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+          />
+          <Configurator />
+
+        </>
+      )}
+      {layout === "vr" && <Configurator />}
+      <Routes>
+        {/* <Routes>  */}
+        {/* <Route element={<AutoLogin />}><Route path="/" element={<Auth />} /></Route> */}
+
+        {/* <Route path="/redirectPage" element={<RedirectPage />} /> */}
+        {/* <Route path="/forgotPassword/:id/:pageStatus" element={<ForgotPassword />} /> */}
+
+        {/* <Route element={<FrontEndUserAndAdminAuth />}> */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/tables" element={<Tables />} />
+        <Route path="/authentication/sign-in" element={<SignIn />} />
+        <Route path="/authentication/sign-up" element={<SignUp />} />
+        <Route path="/" element={<SignIn />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/logout" element={<Dashboard />} />
+        <Route path="/grid" element={<BasicGrid />} />
+        <Route path="/listing" element={<Listing />} />
+        {/* <Route path="/Invoice" element={<Invoice />} />
+      <Route path="/admin" element={<FrontEndAdminAuth />}>
+      <Route path="unverifiedUserList" element={<UserList />} /> */}
+        {/* { </Route> */}
+
+        <Route path="*" element={<Dashboard />} />
+        {/* <Route path="*" element={<h1>Error 404 NOT FOUND</h1>} /> */}
+        {/* </Routes>{" "} */}
+        {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
+      </Routes>
+    </ThemeProvider>
   );
 }

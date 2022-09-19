@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // prop-types is a library for typechecking of props
+/*eslint-disable*/
 import PropTypes from "prop-types";
 
 // @mui material components
@@ -32,14 +33,14 @@ import Footer from "layouts/authentication/components/Footer";
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
+      {/* <DefaultNavbar
         action={{
           type: "external",
           route: "https://creative-tim.com/product/material-dashboard-react",
           label: "free download",
           color: "dark",
         }}
-      />
+      /> */}
       <MDBox
         position="absolute"
         width="100%"
@@ -63,7 +64,7 @@ function BasicLayout({ image, children }) {
           </Grid>
         </Grid>
       </MDBox>
-      <Footer light />
+
     </PageLayout>
   );
 }

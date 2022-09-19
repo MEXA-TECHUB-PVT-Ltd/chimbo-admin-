@@ -31,7 +31,7 @@ function DashboardLayout({ children }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav } = controller;
   const { pathname } = useLocation();
-
+  console.log(children);
   useEffect(() => {
     setLayout(dispatch, "dashboard");
   }, [pathname]);
