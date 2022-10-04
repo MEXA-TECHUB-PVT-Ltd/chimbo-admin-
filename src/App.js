@@ -15,15 +15,23 @@ Coded by www.creative-tim.com
 /*eslint-disable*/
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
+
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
+import Reset from "layouts/authentication/reset-password/cover";
+import EnterOtp from "layouts/authentication/reset-password/EnterOtp";
+import NewPassword from "layouts/authentication/reset-password/EnterNewPassword";
 import SignUp from "layouts/authentication/sign-up";
 import Listing from "layouts/ListingForm"
 import { useState, useEffect, useMemo } from "react";
-
+import HeatingTypeForm from "./layouts/heatingTypeForm"
+import PropertyTypeForm from "./layouts/propertyTypeForm"
+import RoomCharacteristics from "./layouts/roomCharacteristicsForm"
+import ViewComponent from "./layouts/ViewComponent"
+import ViewUserComponent from "./layouts/ViewUserComponent"
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
@@ -62,6 +70,7 @@ import { BasicGrid } from "./BasicGrid"
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import TablePage from "layouts/TablePage";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -138,56 +147,7 @@ export default function App() {
       return null;
     });
 
-  // const configsButton = (
-  //   // <MDBox
-  //   //   display="flex"
-  //   //   justifyContent="center"
-  //   //   alignItems="center"
-  //   //   width="3.25rem"
-  //   //   height="3.25rem"
-  //   //   bgColor="white"
-  //   //   shadow="sm"
-  //   //   borderRadius="50%"
-  //   //   position="fixed"
-  //   //   right="2rem"
-  //   //   bottom="2rem"
-  //   //   zIndex={99}
-  //   //   color="dark"
-  //   //   sx={{ cursor: "pointer" }}
-  //   //   onClick={handleConfiguratorOpen}
-  //   // >
-  //   //   <Icon fontSize="small" color="inherit">
-  //   //     settings
-  //   //   </Icon>
-  //   // </MDBox>
-  // );
 
-  //  direction === "rtl" ? (
-  //   <CacheProvider value={rtlCache}>
-  //     <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-  //       <CssBaseline />
-  //       {layout === "dashboard" && (
-  //         <>
-  //           <Sidenav
-  //             color={sidenavColor}
-  //             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-  //             brandName="Material Dashboard 2"
-
-  //             onMouseEnter={handleOnMouseEnter}
-  //             onMouseLeave={handleOnMouseLeave}
-  //           />
-  //           <Configurator />
-  //           {configsButton}
-  //         </>
-  //       )}
-  //       {layout === "vr" && <Configurator />}
-  //       <Routes>
-  //         {getRoutes(routes)}
-  //         <Route path="*" element={<Navigate to="/dashboard" />} />
-  //       </Routes>
-  //     </ThemeProvider>
-  //   </CacheProvider>
-  // ) : (
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
@@ -207,31 +167,32 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {/* <Routes>  */}
-        {/* <Route element={<AutoLogin />}><Route path="/" element={<Auth />} /></Route> */}
 
-        {/* <Route path="/redirectPage" element={<RedirectPage />} /> */}
-        {/* <Route path="/forgotPassword/:id/:pageStatus" element={<ForgotPassword />} /> */}
-
-        {/* <Route element={<FrontEndUserAndAdminAuth />}> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tables" element={<Tables />} />
         <Route path="/authentication/sign-in" element={<SignIn />} />
         <Route path="/authentication/sign-up" element={<SignUp />} />
+        <Route path="/forgotPassword" element={<Reset />} />
+        <Route path="/otp" element={<EnterOtp />} />
+        <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/" element={<SignIn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/logout" element={<Dashboard />} />
         <Route path="/grid" element={<BasicGrid />} />
-        <Route path="/listing" element={<Listing />} />
-        {/* <Route path="/Invoice" element={<Invoice />} />
-      <Route path="/admin" element={<FrontEndAdminAuth />}>
-      <Route path="unverifiedUserList" element={<UserList />} /> */}
-        {/* { </Route> */}
-
+        <Route path="/listing" element={<Tables name="Listings" />} />
+        <Route path="/heatingTypes" element={<Tables name="Heating Types" />} />
+        <Route path="/propertyTypes" element={<Tables name="Property Types" />} />
+        <Route path="/roomCha" element={<Tables name="Room Characteristics" />} />
+        <Route path="/listingForm" element={<Listing />} />
+        <Route path="/heatingTypeForm/:heatingTypeId" element={< HeatingTypeForm />} />
+        <Route path="/propertyTypeForm/:propertyTypeId" element={< PropertyTypeForm />} />
+        <Route path="/roomCharacteristicForm/:roomCharacteristicId" element={< RoomCharacteristics />} />
+        {/* <Route path="/map" element={<Maps isMarkerShown={true} />} /> */}
+        <Route path="/users" element={<Tables name="Users" />} />
+        <Route path="/views/:listingID" element={<ViewComponent />} />
+        <Route path="/userViews/:userId" element={<ViewUserComponent />} />
         <Route path="*" element={<Dashboard />} />
-        {/* <Route path="*" element={<h1>Error 404 NOT FOUND</h1>} /> */}
-        {/* </Routes>{" "} */}
-        {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
+
       </Routes>
     </ThemeProvider>
   );

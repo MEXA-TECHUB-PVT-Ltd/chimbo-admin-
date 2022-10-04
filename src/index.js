@@ -12,20 +12,27 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+/*eslint-disable*/
 
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "App";
+import { createRoot } from 'react-dom/client'
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
-
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <MaterialUIControllerProvider>
       <App />
     </MaterialUIControllerProvider>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
+  // ReactDOM.render(
+  //   <BrowserRouter>
+  //     <MaterialUIControllerProvider>
+  //       <App />
+  //     </MaterialUIControllerProvider>
+  //   </BrowserRouter>,
+  //   document.getElementById("root")
 );

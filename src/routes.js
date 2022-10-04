@@ -45,7 +45,7 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Listing from "layouts/ListingForm";
-
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -56,16 +56,16 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+
   },
-  {
-    type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
-  },
+  // {
+  //   type: "collapse",s
+  //   name: "Tables",
+  //   key: "tables",
+  //   icon: <Icon fontSize="small">table_view</Icon>,
+  //   route: "/tables",
+
+  // },
   // {
   //   type: "collapse",
   //   name: "Billing",
@@ -96,15 +96,55 @@ const routes = [
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
-    component: <Profile />,
+
   },
+  // {
+  //   type: "collapse",
+  //   name: "Listing",
+  //   key: " Add listing",
+  //   icon: <Icon fontSize="small">login</Icon>,
+  //   route: "/listing",
+  //   component: <Listing />,
+  // },
   {
     type: "collapse",
-    name: "Add Listing",
+    name: "Listing",
     key: "listing",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/listing",
-    component: <Listing />,
+
+  },
+  {
+    type: "collapse",
+    name: "Heating Types",
+    key: "heatingTypes",
+    icon: <WhatshotIcon />,
+    route: "/heatingTypes",
+
+  },
+  {
+    type: "collapse",
+    name: "Property Types",
+    key: "propertyTypes",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/propertyTypes",
+
+  },
+  {
+    type: "collapse",
+    name: "Room Characteristics",
+    key: "roomCha",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/roomCha",
+
+  },
+  {
+    type: "collapse",
+    name: "Users",
+    key: "user",
+    icon: <Icon fontSize="small">people</Icon>,
+    route: "/users",
+
   },
   {
     type: "collapse",
@@ -112,8 +152,10 @@ const routes = [
     key: "logout",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
-    component: <SignUp />,
+
   },
+
 ];
+
 
 export default routes;

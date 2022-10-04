@@ -94,7 +94,7 @@ function Basic() {
                 {errors.password}
               </Typography>}
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
+            {/* <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
                 variant="button"
@@ -105,7 +105,7 @@ function Basic() {
               >
                 &nbsp;&nbsp;Remember me
               </MDTypography>
-            </MDBox>
+            </MDBox> */}
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 sign in
@@ -127,9 +127,25 @@ function Basic() {
               </MDTypography>
             </MDBox>
           </MDBox>
+          <MDBox mt={3} mb={1} textAlign="center">
+            <MDTypography
+              component={Link}
+              to="/forgotPassword"
+              variant="button"
+              color="info"
+              fontWeight="medium"
+              textGradient
+              sx={{
+                textAlign: "center"
+              }}
+            >
+              Forgot Password?
+            </MDTypography>
+          </MDBox>
           {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px", textAlign: "center" }} my={1}>
             {error}
           </Typography>}
+
         </MDBox>
       </Card>
     </BasicLayout>

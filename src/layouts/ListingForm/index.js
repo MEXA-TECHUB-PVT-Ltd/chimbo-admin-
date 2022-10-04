@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 /* eslint-disable */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -34,6 +34,10 @@ import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+
+import Modal from '@mui/material/Modal';
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
@@ -53,35 +57,112 @@ import Dashboard from "layouts/dashboard";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { ArrowDownward, ArrowDropDown } from "@mui/icons-material";
-
+import { getAllPropertyTypes } from "api";
+import { listingForm } from "validations/Uservalidation";
+import { getIDs } from "api";
+import GoogleMaps from "../../GoogleMaps"
+import { object } from "prop-types";
+import { addListing } from "api";
+import { uploadImagesAndVideos } from "api";
 function Basic() {
     const iconDisplay = {
         '&.MuiSvgIcon-root': {
             display: "block"
         }
     }
+    const Identity = "62e2485a95073225804a82f9"
 
-
+    // const [data1, setData] = useState([])
+    const [propertyType, setPropertyType] = useState([]);
+    const [listingType, setListingType] = useState([]);
+    const [specification, setSpecification] = useState([]);
+    const [RoomCharacteristics, setRoomCha] = useState([])
+    const [listingFeatures, setListingFeatures] = useState([]);
+    const [heatingType, setHeatingType] = useState([]);
+    const [occupationType, setOccupationType] = useState([]);
+    const [gender, setGender] = useState([]);
     const [value, setValue] = useState(null);
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState("");
+    const [accessibilityItem, setAItem] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [images, setImages] = useState([]);
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
     const navigate = useNavigate();
+
     const initialValues = {
-        name: "",
+
+        propertyTypeId: "",
+        listingTypeId: "",
+        selectedSpecifications: "",
+        genderPreferenceId: "",
+        city: "",
+        streetName: "",
+        streetNo: "",
+        price: "",
+        heatingTypeId: "",
+        availableFrom: "",
+        roomSharedWith: "",
+        currentResidentCount: "",
+        isOwnerLivingInProperty: "",
+        occupationTypeId: "",
+        minStay: "",
+        communityFee: "",
+        deposit: "",
+        imagePaths: [],
+        selectedRoomCharacteristics: "",
+        selectedFeatures: "",
+        selectedAccessibilityItems: "",
+        rAddress: "",
+        m2: "",
+        baths: "",
+        beds: "",
+        location: {
+            type: "Point",
+            coordinates: []
+        },
+        phone: "",
         email: "",
+        yourName: "",
+        advertiser: "",
+        addedBy: "admin"
+
+
+
+
+
+
+
+
+
 
     }
 
-    const { values, errors, handleChange, handleSubmit } = useFormik({
+    const { values, errors, handleChange, handleSubmit, setFieldValue } = useFormik({
         initialValues: initialValues,
-        validationSchema: adminLoginSchema,
+        validationSchema: listingForm,
         onSubmit: async (values) => {
             try {
-                const { data } = await authFormLogin(values)
-                console.log(data);
-                if (data.status == 200) {
-                    navigate("/dashboard")
+
+                let formData = new FormData();
+                console.log(images);
+                images.map((item, index) => {
+
+                    formData.append("listing-images", item)
+                })
+                console.log(formData);
+
+
+                const { data } = await uploadImagesAndVideos(formData)
+                console.log(data.images);
+                values.imagePaths = data.images
+                values.advertiser = "63218613c3d2b2b19d8aead8"
+                const { data: listingResp } = await addListing(values)
+                if (listingResp.status == 200) {
+                    // navigate("/dashboard")
+                    alert("listing Added Successfully")
                 }
             }
             catch (e) {
@@ -90,6 +171,83 @@ function Basic() {
             }
         }
     })
+    console.log(errors);
+    console.log(values);
+
+    // const handlePropertyChange = (e) => {
+    //     setProperty(e.target.value)
+    // }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 1200,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 1,
+    };
+    function getLocation(lat, long) {
+        values.location.coordinates[0] = long
+        values.location.coordinates[1] = lat
+        // handleClose();
+        console.log(long);
+        console.log(lat);
+    }
+
+    useEffect(() => {
+        async function get() {
+            try {
+                const { data } = await getIDs();
+                if (data.status === 200) {
+                    // console.log(resp);
+                    const { IDs } = data;
+                    console.log(IDs);
+                    setPropertyType(IDs.propertyTypeIDs);
+                    setListingType(IDs.listingTypeIDs);
+                    setSpecification(IDs.specificationIDs);
+                    setRoomCha(IDs.roomCharacteristicsIDs);
+                    setListingFeatures(IDs.featuresIDs);
+                    setHeatingType(IDs.heatingTypeIDs);
+                    setGender(IDs.genderIDs);
+                    setOccupationType(IDs.occupationTypeIDs);
+                    setAItem(IDs.accessibilityItemIDs);
+                }
+
+            }
+            catch (e) {
+                // console.log(e.response.data.message);
+                console.log(e);
+                // alert(e.response.data.message)
+                setPropertyType([])
+                setListingType([])
+                setSpecification([]);
+                setRoomCha([]);
+                setListingFeatures([]);
+                setHeatingType([]);
+                setGender([]);
+                setOccupationType([]);
+                setAItem([]);
+            }
+        }
+        get();
+    }, [])
+    // console.log(data1);
+
+
+
+
+
+
+
+    console.log(images);
+
+
+
+
+
+
     return (
 
         <DashboardLayout>
@@ -105,18 +263,26 @@ function Basic() {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={""}
+                                    value={values.propertyTypeId}
                                     label="Select Property Type"
                                     onChange={handleChange}
-                                    sx={{ py: 1.5 }}
-                                    IconComponent={ArrowDropDown}
+                                    name="propertyTypeId"
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
+
 
                                 >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+
+                                    {propertyType?.map((value) =>
+
+                                        <MenuItem key={value._id} value={value._id}>{value.name}</MenuItem>
+                                    )}
+
                                 </Select>
+
                             </FormControl>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.propertyTypeId}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <FormControl fullWidth >
@@ -124,66 +290,87 @@ function Basic() {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={""}
+                                    value={values.listingTypeId}
                                     label="Select Operation"
                                     onChange={handleChange}
-                                    sx={{ py: 1.5 }}
-                                    IconComponent={ArrowDropDown}
+                                    name="listingTypeId"
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
+
 
                                 >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    {listingType?.map((value) =>
+
+                                        <MenuItem key={value._id} value={value._id}>{value.name}</MenuItem>
+                                    )}
                                 </Select>
                             </FormControl>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.listingTypeId}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Set Location" name="location" onChange={handleChange} fullWidth />
+                            <MDInput type="text" label="Set Location" value={values.location.coordinates} name="location" onClick={handleOpen} fullWidth />
+                            <Modal
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <GoogleMaps loc={getLocation} />
+                                    {/* <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Text in a modal
+                                    </Typography>
+                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                    // </Typography> */}
+                                </Box>
+                            </Modal>
                             {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.password}
                             </Typography>} */}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="city/town" name="city-town" onChange={handleChange} fullWidth />
+                            <MDInput type="text" label="city/town" name="city" onChange={handleChange} fullWidth />
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.city}
+                            </Typography>}
+                        </MDBox>
+                        <MDBox mb={2}>
+                            <MDInput type="text" label="Street Name" name="streetName" onChange={handleChange} fullWidth />
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.streetName}
+                            </Typography>}
+                        </MDBox>
+                        <MDBox mb={2}>
+                            <MDInput type="text" label="Number" name="streetNo" onChange={handleChange} fullWidth />
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.streetNo}
+                            </Typography>}
+                        </MDBox>
+                        <MDBox mb={2}>
+                            <MDInput type="text" label="Residential Address (optional)" name="rAddress" onChange={handleChange} fullWidth />
                             {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.password}
                             </Typography>} */}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Street Name" name="street" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
-                        </MDBox>
-                        <MDBox mb={2}>
-                            <MDInput type="text" label="Number" name="stnumber" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
-                        </MDBox>
-                        <MDBox mb={2}>
-                            <MDInput type="text" label="Residential Address (optional)" name="address" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
-                        </MDBox>
-                        <MDBox mb={2}>
-                            <MDInput type="email" label="Email" name="Email" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
+                            <MDInput type="email" label="Email" name="email" onChange={handleChange} fullWidth />
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.email}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <MDInput type="number" label="Phone" name="phone" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.phone}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Your Name" name="name" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
+                            <MDInput type="text" label="Your Name" name="yourName" onChange={handleChange} fullWidth />
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.yourName}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <MDInput type="text" label="Select Preferable Contact" name="pContact" onChange={handleChange} fullWidth />
@@ -191,7 +378,7 @@ function Basic() {
                                 {errors.password}
                             </Typography>} */}
                         </MDBox>
-                        <MDBox mb={2}>
+                        {/* <MDBox mb={2}>
                             <FormControl fullWidth >
                                 <InputLabel id="demo-simple-select-label">Property Type</InputLabel>
                                 <Select
@@ -200,8 +387,8 @@ function Basic() {
                                     value={10}
                                     label="Property Type"
                                     onChange={handleChange}
-                                    sx={{ py: 1.5 }}
-                                    IconComponent={ArrowDropDown}
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
+
 
                                 >
                                     <MenuItem value={10}>Ten</MenuItem>
@@ -209,41 +396,43 @@ function Basic() {
                                     <MenuItem value={30}>Thirty</MenuItem>
                                 </Select>
                             </FormControl>
-                        </MDBox>
+                        </MDBox> */}
                         <MDBox mb={2}>
-                            <MDInput type="text" label="M2 of house" name="area" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
+                            <MDInput type="number" label="M2 of house" name="m2" onChange={handleChange} fullWidth />
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.m2}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <MDInput type="number" label="Add no of Beds" name="beds" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.beds}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <MDInput type="number" label="Add no of Baths" name="baths" onChange={handleChange} fullWidth />
-                            {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                                {errors.password}
-                            </Typography>} */}
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.baths}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2} >
                             <FormControl sx={{ width: "100%" }}>
                                 <FormLabel sx={{ fontSize: "15px" }} id="demo-radio-buttons-group-label">Does the Property has Lift</FormLabel>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
-                                    name="radio-buttons-group"
+                                    defaultValue="62e2485a95073225804a82f9"
+                                    // value={values.selectedSpecifications}
+                                    name="selectedSpecifications[0].id"
                                     sx={{ fontSize: "10px", width: "100%" }}
+                                    onChange={handleChange}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
 
-                                            <FormControlLabel xs={6} value="female" control={<Radio />} label="Yes" />
+                                            <FormControlLabel xs={6} value={specification[0]?._id} control={<Radio />} label="Yes" />
                                         </Grid>
                                         <Grid item>
-                                            <FormControlLabel sx={6} value="male" control={<Radio />} label="No" />
+                                            <FormControlLabel xs={6} value={Identity} control={<Radio />} label="No" />
                                         </Grid>
                                     </Grid>
                                 </RadioGroup>
@@ -254,17 +443,19 @@ function Basic() {
                                 <FormLabel sx={{ fontSize: "15px" }} id="demo-radio-buttons-group-label">Smoking Allowed?</FormLabel>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
-                                    name="radio-buttons-group"
+                                    defaultValue={Identity}
+                                    // value={values.selectedSpecifications}
+                                    name="selectedSpecifications[1].id"
                                     sx={{ fontSize: "10px", width: "100%" }}
+                                    onChange={handleChange}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
 
-                                            <FormControlLabel xs={6} value="female" control={<Radio />} label="Yes" />
+                                            <FormControlLabel xs={6} value={specification[1]?._id} control={<Radio />} label="Yes" />
                                         </Grid>
                                         <Grid item>
-                                            <FormControlLabel sx={6} value="male" control={<Radio />} label="No" />
+                                            <FormControlLabel xs={6} value={Identity} control={<Radio />} label="No" />
                                         </Grid>
                                     </Grid>
                                 </RadioGroup>
@@ -275,17 +466,19 @@ function Basic() {
                                 <FormLabel sx={{ fontSize: "15px" }} id="demo-radio-buttons-group-label">Are Couple Allowed to Share Room and Expense</FormLabel>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
-                                    name="radio-buttons-group"
+                                    defaultValue={Identity}
+                                    // value={values.selectedSpecifications}
+                                    name="selectedSpecifications[2].id"
                                     sx={{ fontSize: "10px", width: "100%" }}
+                                    onChange={handleChange}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
 
-                                            <FormControlLabel xs={6} value="female" control={<Radio />} label="Yes" />
+                                            <FormControlLabel xs={6} value={specification[2]?._id} control={<Radio />} label="Yes" />
                                         </Grid>
                                         <Grid item>
-                                            <FormControlLabel sx={6} value="male" control={<Radio />} label="No" />
+                                            <FormControlLabel xs={6} value={Identity} control={<Radio />} label="No" />
                                         </Grid>
                                     </Grid>
                                 </RadioGroup>
@@ -296,17 +489,19 @@ function Basic() {
                                 <FormLabel sx={{ fontSize: "15px" }} id="demo-radio-buttons-group-label">Are Pets Allowed</FormLabel>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
-                                    name="radio-buttons-group"
+                                    defaultValue={Identity}
+                                    // value={values.selectedSpecifications}
+                                    name="selectedSpecifications[3].id"
                                     sx={{ fontSize: "10px", width: "100%" }}
+                                    onChange={handleChange}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
 
-                                            <FormControlLabel xs={6} value="female" control={<Radio />} label="Yes" />
+                                            <FormControlLabel xs={6} value={specification[3]?._id} control={<Radio />} label="Yes" />
                                         </Grid>
                                         <Grid item>
-                                            <FormControlLabel sx={6} value="male" control={<Radio />} label="No" />
+                                            <FormControlLabel xs={6} value={Identity} control={<Radio />} label="No" />
                                         </Grid>
                                     </Grid>
                                 </RadioGroup>
@@ -317,17 +512,19 @@ function Basic() {
                                 <FormLabel sx={{ fontSize: "15px" }} id="demo-radio-buttons-group-label">Are Minors are Allowed (optional) </FormLabel>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
-                                    name="radio-buttons-group"
+                                    defaultValue={Identity}
+                                    // value={values.selectedSpecifications}
+                                    name="selectedSpecifications[4].id"
                                     sx={{ fontSize: "10px", width: "100%" }}
+                                    onChange={handleChange}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
 
-                                            <FormControlLabel xs={6} value="female" control={<Radio />} label="Yes" />
+                                            <FormControlLabel xs={6} value={specification[4]?._id} control={<Radio />} label="Yes" />
                                         </Grid>
                                         <Grid item>
-                                            <FormControlLabel sx={6} value="male" control={<Radio />} label="No" />
+                                            <FormControlLabel xs={6} value={Identity} control={<Radio />} label="No" />
                                         </Grid>
                                     </Grid>
                                 </RadioGroup>
@@ -338,26 +535,40 @@ function Basic() {
                         <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Room Characteristics </FormLabel>
                             <FormGroup >
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox defaultChecked />} label="Air Condition" />
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="Lift" />
+                                {
+                                    RoomCharacteristics.map((item, index) =>
+                                        <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} value={item._id} control={<Checkbox name={`selectedRoomCharacteristics[${index}].id`} onChange={handleChange} />} label={item.name} />
+                                    )
+                                }
+
                             </FormGroup>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.selectedRoomCharacteristics}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Features of Building </FormLabel>
-                            <FormGroup >
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox defaultChecked />} label="Air Condition" />
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="Lift" />
+                            <FormGroup >{
+                                listingFeatures.map((item, index) =>
+                                    <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox name={`selectedFeatures[${index}].id`} value={item._id} onChange={handleChange} />} label={item.name} />
+                                )}
                             </FormGroup>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.selectedFeatures}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Is the property adapted for people with
                                 reduced mobilty? </FormLabel>
+
                             <FormGroup >
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal", width: "90%", marginTop: "20px" } }} control={<Checkbox defaultChecked />} label="The exterior access to the property has
-                                     been adapted for wheelchair use (the property has ramps and a lift with a capacity of 6 people or the property is at street level without kerbs)" />
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="The interior of the property has been
-                                        adapted for wheelchair use (it has wide doors and corridors, handrails, non-slip floors,…)" />
+                                {accessibilityItem.map((item, index) =>
+                                    <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal", width: "90%", marginTop: "20px" } }} control={<Checkbox name={`selectedAccessibilityItems[${index}].id`} value={item._id} onChange={handleChange} />} label={item.name} />
+                                )}
                             </FormGroup>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.selectedAccessibilityItems}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <FormControl fullWidth >
@@ -365,25 +576,55 @@ function Basic() {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={""}
-                                    label="Heating Type"
+                                    value={values.heatingTypeId}
+                                    label="Select Operation"
                                     onChange={handleChange}
-                                    sx={{ py: 1.5 }}
-                                    IconComponent={ArrowDropDown}
+                                    name="heatingTypeId"
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
+
 
                                 >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    {heatingType?.map((value) =>
+
+                                        <MenuItem key={value._id} value={value._id}>{value.name}</MenuItem>
+                                    )}
                                 </Select>
                             </FormControl>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.heatingTypeId}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <Grid container justifyContent="space-evenly">
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox defaultChecked />} label="1 Person" />
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="2 Persons" />
-                                <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="3 Persons or More" />
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    // defaultValue={Identity}
+                                    value={values.roomSharedWith}
+                                    name="roomSharedWith"
+                                    sx={{ fontSize: "10px", width: "100%" }}
+                                    onChange={handleChange}
+                                >
+                                    <Grid container justifyContent="space-evenly" >
+                                        <Grid item>
+
+                                            <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Radio value={1} />} label="1 Person" />
+                                        </Grid>
+                                        <Grid item>
+                                            <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Radio value={2} />} label="2 Persons" />
+                                        </Grid>
+                                        <Grid item>
+                                            <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Radio value={3} />} label="3 Persons or More" />
+                                        </Grid>
+                                    </Grid>
+
+
+
+                                </RadioGroup>
+
                             </Grid>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.roomSharedWith}
+                            </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Other Features of Property </FormLabel>
@@ -397,51 +638,89 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Available From </Typography>
-                        <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
-
+                        <MDInput type="date" label="" value={values.availableFrom} name="availableFrom" onChange={handleChange} fullWidth />
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.availableFrom}
+                        </Typography>}
                     </MDBox>
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>About the people currently living in the house </Typography>
-                        <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
-
+                        <MDInput type="number" label="" name="currentResidentCount" onChange={handleChange} fullWidth />
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.currentResidentCount}
+                        </Typography>}
                     </MDBox>
                     <MDBox mb={2} >
                         <FormControl sx={{ width: "100%" }}>
                             <FormLabel sx={{ fontSize: "15px" }} id="demo-radio-buttons-group-label">Does Anyone currently Living in the Property?</FormLabel>
                             <RadioGroup
                                 aria-labelledby="demo-radio-buttons-group-label"
-                                defaultValue="female"
-                                name="radio-buttons-group"
+                                // defaultValue="female"
+                                name="isOwnerLivingInProperty"
+                                value={values.isOwnerLivingInProperty}
+                                onChange={handleChange}
                                 sx={{ fontSize: "10px", width: "100%" }}
+
                             >
                                 <Grid container justifyContent="space-evenly" >
                                     <Grid item>
 
-                                        <FormControlLabel xs={6} value="female" control={<Radio />} label="Yes" />
+                                        <FormControlLabel xs={6} value="true" control={<Radio />} label="Yes" />
                                     </Grid>
                                     <Grid item>
-                                        <FormControlLabel sx={6} value="male" control={<Radio />} label="No" />
+                                        <FormControlLabel xs={6} value="false" control={<Radio />} label="No" />
                                     </Grid>
                                 </Grid>
                             </RadioGroup>
                         </FormControl>
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.isOwnerLivingInProperty}
+                        </Typography>}
                     </MDBox>
                     <MDBox mb={2}>
+                        <FormControl fullWidth >
+                            <InputLabel id="demo-simple-select-label">Gender of Person</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={values.genderPreferenceId}
+                                label="Select Operation"
+                                onChange={handleChange}
+                                name="genderPreferenceId"
+                                sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
 
-                        <Typography variant="string" sx={{ fontSize: "15px" }}>Gender of person you are looking for</Typography>
-                        <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
 
+                            >
+                                {gender?.map((value) =>
+
+                                    <MenuItem key={value._id} value={value._id}>{value.name}</MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.genderPreferenceId}
+                        </Typography>}
                     </MDBox>
                     <MDBox mb={2}>
                         <FormLabel sx={{ fontSize: "15px" }} id="">Occupation </FormLabel>
                         <FormGroup >
-                            <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox defaultChecked />} label="Air Condition" />
-                            <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="Lift" />
+                            {occupationType.map((item, index) =>
+                                <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox name={`occupationTypeId[${index}].id`} value={item._id} onChange={handleChange} />} label={item.name} />
+                            )}
                         </FormGroup>
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.occupationTypeId}
+                        </Typography>}
                     </MDBox>
                     <MDBox mb={2}>
-                        <FormControl fullWidth >
+                        {/* <MDBox mb={2}> */}
+
+                        <Typography variant="string" sx={{ fontSize: "15px" }}>Minimum Stay </Typography>
+                        <MDInput label="" name="minStay" onChange={handleChange} fullWidth />
+
+                        {/* </MDBox> */}
+                        {/* <FormControl fullWidth >
                             <InputLabel id="demo-simple-select-label">Minimum Stay</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
@@ -450,46 +729,77 @@ function Basic() {
                                 label="Minimum Stay"
                                 onChange={handleChange}
                                 sx={{ py: 1.5 }}
-                                IconComponent={ArrowDropDown}
+
 
                             >
                                 <MenuItem value={10}>Ten</MenuItem>
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>
                             </Select>
-                        </FormControl>
+                        </FormControl> */}
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.minStay}
+                        </Typography>}
                     </MDBox>
 
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Price</Typography>
-                        <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
-
+                        <MDInput type="number" label="" name="price" onChange={handleChange} fullWidth />
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.price}
+                        </Typography>}
                     </MDBox>
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Community Fees (Optional) </Typography>
-                        <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
+                        <MDInput type="number" label="" name="communityFee" onChange={handleChange} fullWidth />
 
                     </MDBox>
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Deposit (Optional) </Typography>
-                        <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
+                        <MDInput type="number" label="" name="deposit" onChange={handleChange} fullWidth />
 
                     </MDBox>
                     <MDBox mb={2}>
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Upload Images </Typography>
                         <Stack direction="row" alignItems="center" spacing={2}>
-                            <MDButton variant="contained" color="info" component="label">
+                            <MDButton variant="contained" color="info" component="label" >
                                 Upload
-                                <input hidden accept="image/*" multiple type="file" />
-                            </MDButton>
-                            <IconButton color="secondary" aria-label="upload picture" component="label">
-                                <input hidden accept="image/*" type="file" />
+                                <input hidden accept="image/* video/*" multiple type="file" onChange={(event) => {
+
+                                    try {
+                                        const files = event.target.files;
+                                        console.log(files);
+                                        let myFiles = Array.from(files);
+                                        console.log(myFiles);
+                                        // const data = myFiles.map((item) => item.name)
+                                        setImages(myFiles);
+
+
+
+                                    }
+                                    catch (e) {
+                                        console.log(e);
+                                    }
+                                    // setFieldValue("imagePaths", data);
+                                    // setImages(myFiles);
+                                }} />
+
+
                                 <PhotoCamera />
-                            </IconButton>
+
+                            </MDButton>
+
+
                         </Stack>
+
+                        {/* <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"></img> */}
+                        {images.map((item, index) => <Typography key={index}>{item.name}</Typography>)}
+                        {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                            {errors.imagePaths}
+                        </Typography>}
                     </MDBox >
                     {/* <MDBox mb={2}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>

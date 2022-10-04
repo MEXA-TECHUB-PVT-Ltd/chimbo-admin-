@@ -12,6 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+/*eslint-disable*/
 
 import { useEffect } from "react";
 
@@ -41,7 +42,9 @@ function PageLayout({ background, children }) {
       height="100%"
       minHeight="100vh"
       bgColor={background}
-      sx={{ overflowX: "hidden" }}
+      sx={{ overflowX: "hidden", zIndex: "0" }}
+
+
     >
       {children}
     </MDBox>

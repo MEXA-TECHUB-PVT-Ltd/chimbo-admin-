@@ -1,100 +1,93 @@
 import axios from "axios";
 /*eslint-disable*/
-import { useState } from "react";
+
 
 // const url = "http://localhost:5000/purchaseForm/post";
 const API = axios.create({
-	baseURL: "http://localhost:3000",
+	// baseURL: "http://143.244.168.93:3000",
+	baseURL: "http://localhost:3000/",
 });
-
+const config = {
+	headers: { 'content-type': 'multipart/form-data' }
+}
 const token = JSON.parse(localStorage.getItem("userToken"));
 
-export const submitPurchaseForm = async (purchaseFormData) => {
-	try {
-		const resp = await API.post(
-			"api/purchaseForm/post",
-			{
-				headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("userToken"))}` },
-			},
-			purchaseFormData
-		);
-		alert(resp.data.name);
-	} catch (e) {
-		alert(e);
-	}
-};
+// export const submitPurchaseForm = async (purchaseFormData) => {
+// 	try {
+// 		const resp = await API.post(
+// 			"api/purchaseForm/post",
+// 			{
+// 				headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("userToken"))}` },
+// 			},
+// 			purchaseFormData
+// 		);
+// 		alert(resp.data.name);
+// 	} catch (e) {
+// 		alert(e);
+// 	}
+// };
 
 export const authFormSignup = (authFormData) => API.put("/api/admin/add", authFormData);
-
-
-
-
-
 export const authFormLogin = (authFormData) => API.post("api/admin/login", authFormData);
 
 
 
-export const getPurchaseFormData = (pageSize, reportID, startDate, endDate) =>
-	API.get(`api/purchaseForm/get?pageSize=${pageSize}&&reportID=${reportID}&&startDate=${startDate}&&endDate=${endDate}`, {
-		headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("userToken"))}` },
-	});
 
-export const getUnverifiedUser = async () => {
-	try {
-		console.log("get user called");
-		const resp = await API.get("api/admin/getUnverifiedUser", {
-			headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("userToken"))}` },
-		});
-		return resp.data;
-	} catch (e) {
-		return e.response.data.message;
-	}
-};
+export const getAllListings = (pageNo) => API.get(`api/listings/getAll?pageNo=${pageNo}`)
+export const getAllPropertyTypes = () => API.get("api/property-types/getAll")
+export const getAllAccessibilityItems = () => API.get("api/accessibility-items/getAll")
+export const getAllGenders = () => API.get("api/genders/getAll")
+export const getAllListingFeatures = () => API.get("api/listing-features/getAll")
+export const getAllListingType = () => API.get("api/listing-types/getAll")
+export const getAllOccupationType = () => API.get("api/occupation-types/getAll")
+export const getAllRoomCharacteristics = () => API.get("api/room-characteristics/getAll")
+export const getAllSpecifications = () => API.get("api/specificaitons/getAll")
+export const getAllUsers = () => API.get("api/user/getAll")
+export const getAllHeatingTypes = () => API.get("api/heating-types/getAll")
+export const getIDs = () => API.get("api/listings/getIDs")
 
-export const AllowUser = async (uniqueKey, status) => {
-	try {
-		console.log("allow user called");
-		await API.post(`api/admin/allowUser/${uniqueKey}/${status}`, {}, {
-			headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("userToken"))}` },
-		});
-	} catch (e) {
-		return e.response;
-	}
-};
-export const VerifyForgotPassword = async (id) => {
-	try {
-		const resp = await API.post(`api/admin/allowUser/${id}/`);
 
-		return resp.data;
-	} catch (e) {
-		return e.response;
-	}
-};
-export const forgotPasswordEmailVerify = async (emailAddress) => {
-	try {
-		const resp = await API.post(`api/forgotPassword/EmailVerify/`, emailAddress);
 
-		return resp.data;
-	} catch (e) {
-		return e.response.data.message;
-	}
-};
-export const changePassword = async (changePasswordData) => {
-	try {
-		const resp = await API.post(`api/forgotPassword/changePassword/`, changePasswordData);
+export const getHeatingType = (id) => API.get(`api/heating-types/get/${id}`)
+export const getRoomCharacteristics = (id) => API.get(`api/room-characteristics/get/${id}`)
+export const getPropertyTypes = (id) => API.get(`api/property-types/get/${id}`)
+export const getListing = (id) => API.post(`api/listings/get/${id}`)
+export const getUser = (id) => API.get(`api/user/get/${id}`)
 
-		return resp.data;
-	} catch (e) {
-		return e.response.data.message;
-	}
-};
 
-export const frontEndAuthAPI = async (token) => {
-	try {
-		const resp = await API.post(`api/frontEnd/auth/`, token);
 
-		return resp.data;
-	} catch (e) {
-		return e.response.data.message;
-	}
-};
+
+
+
+
+export const addHeatingType = (values) => API.put("api/heating-types/add", values)
+export const addPropertType = (values) => API.put("api/property-types/add", values)
+export const addRoomCharacteristic = (values) => API.put("api/room-characteristics/add", values)
+export const addListing = (values) => API.put("api/listings/add", values)
+
+
+
+
+
+
+
+export const deleteHeatingType = (id) => API.delete(`api/heating-types/delete/${id}`)
+export const deletePropertyType = (id) => API.delete(`api/property-types/delete/${id}`)
+export const deleteRoomCharacteristics = (id) => API.delete(`api/room-characteristics/delete/${id}`)
+export const deleteListing = (id) => API.delete(`api/listings/delete/${id}`)
+
+
+
+
+export const BlockUser = (values) => API.patch(`api/user/block`, values);
+export const UnBlockUser = (values) => API.patch(`api/user/unblock`, values);
+export const updateHeatingType = (values) => API.patch(`api/heating-types/update`, values);
+export const updatePropertyType = (values) => API.patch(`api/property-types/update`, values);
+export const updateRoomCharacteristic = (values) => API.patch(`api/room-characteristics/update`, values);
+export const changePassword = (values) => API.patch(`api/admin/changePassword`, values);
+
+
+
+export const uploadImagesAndVideos = (values) => API.post(`api/listings/upload-images`, values, config);
+export const getByEmail = (data) => API.post(`api/admin/getByEmail/`, data)
+export const verifyAdminOtp = (data) => API.post(`api/admin/verifyOtp`, data)

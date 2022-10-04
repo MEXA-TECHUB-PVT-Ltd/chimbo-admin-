@@ -22,38 +22,42 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
-import { useFormik } from "formik";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
-import { useState } from "react";
-import { userVerifyEmail } from "validations/Uservalidation";
-import { Typography } from "@mui/material";
-import { getByEmail } from "api";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { useFormik } from "formik";
+import { changePassword } from "api";
+import { enternewPassword } from "validations/Uservalidation";
+import { Typography } from "@mui/material";
 
 function Cover() {
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const adminId = localStorage.getItem("adminId")
   const initialValues = {
 
-    email: "",
+    newPassword: "",
+    adminId: adminId
 
   }
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
-    validationSchema: userVerifyEmail,
+    validationSchema: enternewPassword,
     onSubmit: async (values) => {
       try {
-        localStorage.removeItem("adminId");
-        const { data } = await getByEmail(values);
+        const { data } = await changePassword(values);
         console.log(data);
-        localStorage.setItem("adminId", data.admin._id);
+
         if (data.status == 200) {
-          navigate("/otp")
+          alert("Password changed Successfully")
+          localStorage.removeItem("adminId")
+          navigate("/authentication/sign-in")
+
         }
       }
       catch (e) {
@@ -65,6 +69,15 @@ function Cover() {
       }
     }
   })
+
+
+
+
+
+
+
+
+
 
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
@@ -80,26 +93,24 @@ function Cover() {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="h3" fontWeight="medium" color="white" mt={1}>
-            Forgot Password
+          <MDTypography variant="h5" fontWeight="medium" color="white" mt={1}>
+            Enter New Password
           </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
-            You will receive an e-mail in maximum 60 seconds
-          </MDTypography>
+
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={4}>
-              <MDInput type="email" label="Email" variant="standard" name="email" value={values.email} onChange={handleChange} fullWidth />
+              <MDInput type="text" label="New Password" onChange={handleChange} variant="standard" name="newPassword" value={values.newPassword} fullWidth />
               {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
-                {errors.email}
+                {errors.newPassword}
               </Typography>}
             </MDBox>
             <MDBox mt={6} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 submit
               </MDButton>
-              {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px", textAlign: "center" }} my={1}>
+              {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                 {error}
               </Typography>}
             </MDBox>
