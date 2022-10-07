@@ -85,7 +85,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.city}
+                                {gListing?.city}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -94,7 +94,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.streetName}
+                                {gListing?.streetName}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -103,7 +103,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.streetNo}
+                                {gListing?.streetNo}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -112,7 +112,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.price}
+                                {gListing?.price}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -121,7 +121,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {format(new Date(gListing.availableFrom), "dd-MM-yyyy")}
+                                {format(new Date(gListing?.availableFrom), "dd-MM-yyyy")}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -130,7 +130,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.currentResidentCount}
+                                {gListing?.currentResidentCount}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -139,7 +139,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.gender.name}
+                                {gListing?.gender?.name}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -148,7 +148,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.beds}
+                                {gListing?.beds}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -157,7 +157,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.baths}
+                                {gListing?.baths}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -166,7 +166,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.rAddress}
+                                {gListing?.rAddress}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -175,7 +175,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.propertyType.name}
+                                {gListing.propertyType?.name}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -184,7 +184,7 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                {gListing.heatingType.name}
+                                {gListing?.heatingType?.name}
                             </Typography>
                         </CardContent>
                         <CardContent>
@@ -195,7 +195,7 @@ export default function MediaCard() {
                             {/* {console.log(gListing.occupationType[0].occupation.name)} */}
                             {gListing.occupationType.map((item, index) =>
                                 <Typography key={index} variant="body2" color="text.secondary">
-                                    {item.occupation.name}
+                                    {item?.occupation?.name}
                                 </Typography>
                             )}
 
@@ -207,11 +207,11 @@ export default function MediaCard() {
                             {gListing.specifications.map((item, index) =>
                                 <Typography key={index} variant="body2" color="text.secondary">
                                     <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                    {item.specification.name === "Is smoking allowed?" && "Smoking Allowed"}
-                                    {item.specification.name === "Does the property have a lift?" && "Property has a Lift"}
-                                    {item.specification.name === "Are couples allowed to share room and expenses?" && "Couples are Allowed to share room and expense"}
-                                    {item.specification.name === "Are pets allowed?" && "Pets are Allowed"}
-                                    {item.specification.name === "Are minors allowed?" && "Minors are Allowed"}
+                                    {item.specification?.name === "Is smoking allowed?" && "Smoking Allowed"}
+                                    {item.specification?.name === "Does the property have a lift?" && "Property has a Lift"}
+                                    {item.specification?.name === "Are couples allowed to share room and expenses?" && "Couples are Allowed to share room and expense"}
+                                    {item.specification?.name === "Are pets allowed?" && "Pets are Allowed"}
+                                    {item.specification?.name === "Are minors allowed?" && "Minors are Allowed"}
 
 
                                 </Typography>
@@ -224,7 +224,7 @@ export default function MediaCard() {
                             {gListing.roomCharacteristics.map((item, index) =>
                                 <Typography key={index} variant="body2" color="text.secondary">
                                     <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                    {item.roomCharacteristic.name}
+                                    {item.roomCharacteristic?.name}
                                 </Typography>
                             )}
                         </CardContent>
@@ -235,7 +235,7 @@ export default function MediaCard() {
                             {gListing.features.map((item, index) =>
                                 <Typography key={index} variant="body2" color="text.secondary">
                                     <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                    {item.feature.name}
+                                    {item.feature?.name}
                                 </Typography>
                             )}
                         </CardContent>
@@ -246,7 +246,7 @@ export default function MediaCard() {
                             {gListing.accessibilityItems.map((item, index) =>
                                 <Typography key={index} variant="body2" color="text.secondary">
                                     <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                    {item.accessibilityItem.name}
+                                    {item?.accessibilityItem?.name}
                                 </Typography>
                             )}
                         </CardContent>
@@ -257,15 +257,15 @@ export default function MediaCard() {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                Name: {gListing.advertiser.name}
+                                Name: {gListing?.advertiser?.name}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                Phone No: {gListing.advertiser.phone}
+                                Phone No: {gListing?.advertiser?.phone}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
-                                Email: {gListing.advertiser.email}
+                                Email: {gListing?.advertiser?.email}
                             </Typography>
 
                         </CardContent>

@@ -7,6 +7,17 @@ export const adminSignUpSchema = yup.object().shape({
 	email: yup.string().email().required("Email required"),
 
 	name: yup.string().required("Name Required"),
+	acceptedTerms: yup.bool().oneOf([true], "You must accept the terms and conditions").required("You must accept the terms and conditions"),
+	phoneNo: yup.number().required("Phone No Required"),
+});
+export const adminUpdateSchema = yup.object().shape({
+
+
+	email: yup.string().email().required("Email required"),
+
+	name: yup.string().required("Name Required"),
+
+	phoneNo: yup.number().required("Phone No Required"),
 });
 
 export const adminLoginSchema = yup.object().shape({

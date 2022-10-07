@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+/*eslint-disable*/
 import { useMemo, useEffect, useState } from "react";
 
 // prop-types is a library for typechecking of props
@@ -224,8 +224,10 @@ function DataTable({
       <MDBox
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
-        justifyContent="space-between"
-        alignItems={{ xs: "flex-start", sm: "center" }}
+        justifyContent="space-evenly"
+        alignItems={{ xs: "flex-start", sm: "center", lg: "center" }}
+
+
         p={!showTotalEntries && pageOptions.length === 1 ? 0 : 3}
       >
         {showTotalEntries && (
@@ -239,6 +241,7 @@ function DataTable({
           <MDPagination
             variant={pagination.variant ? pagination.variant : "gradient"}
             color={pagination.color ? pagination.color : "info"}
+
           >
             {canPreviousPage && (
               <MDPagination item onClick={() => previousPage()}>

@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 /*eslint-disable*/
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
-
+import UpdateProfile from "layouts/profile/updateProfile";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
@@ -34,12 +34,12 @@ import ViewComponent from "./layouts/ViewComponent"
 import ViewUserComponent from "./layouts/ViewUserComponent"
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
+import AdminRoutesAuth from "AdminRoutesAuth";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
+import Logout from "Logout";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
@@ -167,32 +167,38 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tables" element={<Tables />} />
         <Route path="/authentication/sign-in" element={<SignIn />} />
         <Route path="/authentication/sign-up" element={<SignUp />} />
+
+
+
+
+        <Route path="/tables" element={<Tables />} />
         <Route path="/forgotPassword" element={<Reset />} />
         <Route path="/otp" element={<EnterOtp />} />
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/" element={<SignIn />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/logout" element={<Dashboard />} />
-        <Route path="/grid" element={<BasicGrid />} />
-        <Route path="/listing" element={<Tables name="Listings" />} />
-        <Route path="/heatingTypes" element={<Tables name="Heating Types" />} />
-        <Route path="/propertyTypes" element={<Tables name="Property Types" />} />
-        <Route path="/roomCha" element={<Tables name="Room Characteristics" />} />
-        <Route path="/listingForm" element={<Listing />} />
-        <Route path="/heatingTypeForm/:heatingTypeId" element={< HeatingTypeForm />} />
-        <Route path="/propertyTypeForm/:propertyTypeId" element={< PropertyTypeForm />} />
-        <Route path="/roomCharacteristicForm/:roomCharacteristicId" element={< RoomCharacteristics />} />
-        {/* <Route path="/map" element={<Maps isMarkerShown={true} />} /> */}
-        <Route path="/users" element={<Tables name="Users" />} />
-        <Route path="/views/:listingID" element={<ViewComponent />} />
-        <Route path="/userViews/:userId" element={<ViewUserComponent />} />
-        <Route path="*" element={<Dashboard />} />
 
+
+        <Route element={<AdminRoutesAuth />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/grid" element={<BasicGrid />} />
+          <Route path="/listing" element={<Tables name="Listings" />} />
+          <Route path="/heatingTypes" element={<Tables name="Heating Types" />} />
+          <Route path="/propertyTypes" element={<Tables name="Property Types" />} />
+          <Route path="/roomCha" element={<Tables name="Room Characteristics" />} />
+          <Route path="/listingForm" element={<Listing />} />
+          <Route path="/heatingTypeForm/:heatingTypeId" element={< HeatingTypeForm />} />
+          <Route path="/propertyTypeForm/:propertyTypeId" element={< PropertyTypeForm />} />
+          <Route path="/roomCharacteristicForm/:roomCharacteristicId" element={< RoomCharacteristics />} />
+          <Route path="/users" element={<Tables name="Users" />} />
+          <Route path="/views/:listingID" element={<ViewComponent />} />
+          <Route path="/userViews/:userId" element={<ViewUserComponent />} />
+          <Route path="/updateProfile/:adminId" element={<UpdateProfile />} />
+          <Route path="*" element={<Dashboard />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );

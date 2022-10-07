@@ -135,8 +135,8 @@ export const useViewUsers = async () => {
                     </MDTypography >
                 ),
                 Block: (
-                    <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <Button onClick={() => { handleClick(_id, isBlocked) }}>{isBlocked ? "UnBlock" : "Block"}</Button>
+                    <MDTypography variant="caption" color="text" fontWeight="medium" >
+                        <Button onClick={() => { handleClick(_id, isBlocked) }} sx={{ ...(isBlocked === false && { color: "red" }) }}>{isBlocked ? "UnBlock" : "Block"}</Button>
                     </MDTypography>
                 ),
 

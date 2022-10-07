@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
+/*eslint-disable*/
 import { Link } from "react-router-dom";
 
 // prop-types is a library for typechecking of props
@@ -30,7 +31,7 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
-function DefaultProjectCard({ image, label, title, description, action, authors }) {
+function DefaultProjectCard({ image, label, title, action, authors }) {
   const renderAuthors = authors.map(({ image: media, name }) => (
     <Tooltip key={name} title={name} placement="bottom">
       <MDAvatar

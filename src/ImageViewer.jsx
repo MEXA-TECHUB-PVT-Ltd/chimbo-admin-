@@ -42,8 +42,8 @@ const ImageViewer = () => {
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <Carousel index={index} indicators={false} sx={{ width: 900 }}>
-                {arrayOfImages.map((item) => (
-                  <img src={item} width="100%" />
+                {arrayOfImages.map((item, index) => (
+                  <img src={item} key={index} width="100%" />
                 ))}
               </Carousel>
             </Typography>
@@ -58,6 +58,7 @@ const ImageViewer = () => {
             onClick={() => {
               handleOpen(index);
             }}
+            key={index}
           />
         ))}
       </Carousel>

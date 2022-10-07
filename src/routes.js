@@ -110,7 +110,7 @@ const routes = [
     type: "collapse",
     name: "Listing",
     key: "listing",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">list</Icon>,
     route: "/listing",
 
   },
@@ -126,7 +126,7 @@ const routes = [
     type: "collapse",
     name: "Property Types",
     key: "propertyTypes",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">house-window</Icon>,
     route: "/propertyTypes",
 
   },
@@ -134,14 +134,14 @@ const routes = [
     type: "collapse",
     name: "Room Characteristics",
     key: "roomCha",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">house-blank</Icon>,
     route: "/roomCha",
 
   },
   {
     type: "collapse",
     name: "Users",
-    key: "user",
+    key: "users",
     icon: <Icon fontSize="small">people</Icon>,
     route: "/users",
 
@@ -151,7 +151,7 @@ const routes = [
     name: "Logout",
     key: "logout",
     icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
+    route: "/logout",
 
   },
 

@@ -149,9 +149,9 @@ function Tables({ name }) {
         <DashboardNavbar />
 
         <MDBox sx={{ textAlign: "end" }}>
-          <MDButton variant="gradient" color="info" small="true" onClick={handleClick} >
+          {name !== "Users" && <MDButton variant="gradient" color="info" small="true" onClick={handleClick} >
             Add {name} +
-          </MDButton>
+          </MDButton>}
         </MDBox>
         {(columns.length === 0 && rows.length === 0) ? <Box sx={{ textAlign: "center" }}> <RotatingLines strokeColor="grey" strokeWidth="3" animationDuration="0.75" width="40" visible={true} /> </Box> :
           <MDBox pt={6} pb={3}>

@@ -92,6 +92,12 @@ function Basic() {
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
     const navigate = useNavigate();
 
+    const adminDetails = JSON.parse(localStorage.getItem("AdminCredentials"));
+    // console.log(admin;
+    // const { id } = admin;
+    const { admin } = adminDetails;
+    const { id } = admin;
+
     const initialValues = {
 
         propertyTypeId: "",
@@ -158,11 +164,11 @@ function Basic() {
                 const { data } = await uploadImagesAndVideos(formData)
                 console.log(data.images);
                 values.imagePaths = data.images
-                values.advertiser = "63218613c3d2b2b19d8aead8"
+                values.advertiser = id
                 const { data: listingResp } = await addListing(values)
                 if (listingResp.status == 200) {
-                    // navigate("/dashboard")
                     alert("listing Added Successfully")
+                    navigate("/listing")
                 }
             }
             catch (e) {
@@ -309,7 +315,7 @@ function Basic() {
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Set Location" value={values.location.coordinates} name="location" onClick={handleOpen} fullWidth />
+                            <MDInput type="text" value={values.location.coordinates} name="location" onClick={handleOpen} fullWidth />
                             <Modal
                                 open={open}
                                 onClose={handleClose}

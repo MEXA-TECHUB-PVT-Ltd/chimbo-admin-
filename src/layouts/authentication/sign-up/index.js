@@ -35,13 +35,24 @@ import { authFormSignup } from "api";
 import { adminSignUpSchema } from "validations/Uservalidation";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import Stack from '@mui/material/Stack';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { useState } from "react";
+import { upload } from "@testing-library/user-event/dist/upload";
+import { uploadAdminProfilePic } from "api";
 
 function Cover() {
+
+  const [image, setImage] = useState({});
+  const [error, setError] = useState();
   const navigate = useNavigate();
   const initialValues = {
     name: "",
     email: "",
-    password: ""
+    password: "",
+    acceptedTerms: "",
+    pfp: "",
+    phoneNo: ""
   }
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
@@ -49,20 +60,31 @@ function Cover() {
     validationSchema: adminSignUpSchema,
     onSubmit: async (values) => {
       try {
+        let formData = new FormData();
+        console.log(image);
+
+
+        formData.append("profile-photo", image[0])
+        console.log(formData);
+        const { data: imagePathData } = await uploadAdminProfilePic(formData)
+        console.log(imagePathData.pfp);
+
+        values.pfp = imagePathData.pfp
         const { data } = await authFormSignup(values)
         console.log(data);
         if (data.status == 200) {
-          navigate("/dashboard")
+          navigate("/authentication/sign-in")
         }
       }
       catch (e) {
-        console.log(e.response.data);
+        console.log(e);
+        setError(e?.response?.data?.message)
       }
     }
   })
   console.log(errors);
-  // console.log(values);
-
+  console.log(values);
+  console.log(image);
 
 
 
@@ -94,6 +116,12 @@ function Cover() {
               </Typography>}
             </MDBox>
             <MDBox mb={2}>
+              <MDInput type="number" label="Phone No" variant="standard" name="phone No" value={values.phoneNo} onChange={handleChange} fullWidth />
+              {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                {errors.phoneNo}
+              </Typography>}
+            </MDBox>
+            <MDBox mb={2}>
               <MDInput type="email" label="Email" variant="standard" name="email" value={values.email} onChange={handleChange} fullWidth />
               {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                 {errors.email}
@@ -105,8 +133,47 @@ function Cover() {
                 {errors.password}
               </Typography>}
             </MDBox>
+            <MDBox mb={2}>
+              <Typography variant="string" sx={{ fontSize: "15px" }}>Upload Profile Image </Typography>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <MDButton variant="contained" color="info" component="label" >
+                  Upload
+                  <input hidden accept="image/*" multiple type="file" onChange={(event) => {
+
+                    try {
+                      const files = event.target.files;
+                      console.log(files);
+                      // let myFiles = Array.from(files);
+                      // console.log(myFiles);
+                      // const data = myFiles.map((item) => item.name)
+                      setImage(files);
+
+
+
+                    }
+                    catch (e) {
+                      console.log(e);
+                    }
+                    // setFieldValue("imagePaths", data);
+                    // setImages(myFiles);
+                  }} />
+
+
+                  <PhotoCamera />
+
+                </MDButton>
+
+
+              </Stack>
+
+
+              {<Typography>{image.name}</Typography>}
+              {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                {errors.pfp}
+              </Typography>}
+            </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
+              <Checkbox name="acceptedTerms" onChange={handleChange} value={true} />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
@@ -125,11 +192,18 @@ function Cover() {
               >
                 Terms and Conditions
               </MDTypography>
+
             </MDBox>
+            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+              {errors.acceptedTerms}
+            </Typography>}
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 sign up
               </MDButton>
+              {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                {error}
+              </Typography>}
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">

@@ -39,7 +39,7 @@ import { useFormik } from "formik";
 import { authFormLogin } from "api";
 import { useNavigate } from "react-router-dom";
 import { adminLoginSchema } from "validations/Uservalidation";
-
+import AdminRoutesAuth from "AdminRoutesAuth";
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
@@ -65,6 +65,7 @@ function Basic() {
         const { data } = await authFormLogin(values)
         console.log(data);
         if (data.status == 200) {
+          localStorage.setItem("AdminCredentials", JSON.stringify(data))
           navigate("/dashboard")
         }
       }

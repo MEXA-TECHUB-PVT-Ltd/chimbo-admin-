@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+/*eslint-disable*/
 import { useMemo } from "react";
 
 // porp-types is a library for typechecking of props
@@ -37,7 +37,7 @@ function ReportsBarChart({ color, title, description, date, chart }) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card sx={{ height: "100%", width: "100%" }}>
       <MDBox padding="1rem">
         {useMemo(
           () => (
@@ -49,7 +49,7 @@ function ReportsBarChart({ color, title, description, date, chart }) {
               py={2}
               pr={0.5}
               mt={-5}
-              height="12.5rem"
+              height="23.5rem"
             >
               <Bar data={data} options={options} />
             </MDBox>
@@ -65,9 +65,7 @@ function ReportsBarChart({ color, title, description, date, chart }) {
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">
-            <MDTypography variant="button" color="text" lineHeight={1} sx={{ mt: 0.15, mr: 0.5 }}>
-              <Icon>schedule</Icon>
-            </MDTypography>
+
             <MDTypography variant="button" color="text" fontWeight="light">
               {date}
             </MDTypography>

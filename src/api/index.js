@@ -4,8 +4,9 @@ import axios from "axios";
 
 // const url = "http://localhost:5000/purchaseForm/post";
 const API = axios.create({
-	// baseURL: "http://143.244.168.93:3000",
-	baseURL: "http://localhost:3000/",
+	baseURL: "http://143.244.168.93:3000/",
+	// baseURL: "http://localhost:3000/",
+
 });
 const config = {
 	headers: { 'content-type': 'multipart/form-data' }
@@ -45,6 +46,9 @@ export const getAllSpecifications = () => API.get("api/specificaitons/getAll")
 export const getAllUsers = () => API.get("api/user/getAll")
 export const getAllHeatingTypes = () => API.get("api/heating-types/getAll")
 export const getIDs = () => API.get("api/listings/getIDs")
+export const getCount = () => API.get("api/listings/getCount")
+
+
 
 
 
@@ -53,7 +57,7 @@ export const getRoomCharacteristics = (id) => API.get(`api/room-characteristics/
 export const getPropertyTypes = (id) => API.get(`api/property-types/get/${id}`)
 export const getListing = (id) => API.post(`api/listings/get/${id}`)
 export const getUser = (id) => API.get(`api/user/get/${id}`)
-
+export const getAdminByID = (id) => API.get(`api/admin/get/${id}`)
 
 
 
@@ -64,6 +68,7 @@ export const addHeatingType = (values) => API.put("api/heating-types/add", value
 export const addPropertType = (values) => API.put("api/property-types/add", values)
 export const addRoomCharacteristic = (values) => API.put("api/room-characteristics/add", values)
 export const addListing = (values) => API.put("api/listings/add", values)
+export const uploadAdminProfilePic = (values) => API.put("api/admin/uploadPfp", values, config)
 
 
 
@@ -85,9 +90,11 @@ export const updateHeatingType = (values) => API.patch(`api/heating-types/update
 export const updatePropertyType = (values) => API.patch(`api/property-types/update`, values);
 export const updateRoomCharacteristic = (values) => API.patch(`api/room-characteristics/update`, values);
 export const changePassword = (values) => API.patch(`api/admin/changePassword`, values);
+export const updateAdminProfile = (values) => API.patch(`api/admin/update-admin`, values);
 
 
 
 export const uploadImagesAndVideos = (values) => API.post(`api/listings/upload-images`, values, config);
 export const getByEmail = (data) => API.post(`api/admin/getByEmail/`, data)
 export const verifyAdminOtp = (data) => API.post(`api/admin/verifyOtp`, data)
+export const getCharData = (value) => API.post("api/listings/charData", value)
