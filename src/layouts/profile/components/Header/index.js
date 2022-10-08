@@ -14,7 +14,8 @@ Coded by www.creative-tim.com
 */
 /*eslint-disable*/
 import { useState, useEffect } from "react";
-
+// import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+// dotenv.config()
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
@@ -35,13 +36,19 @@ import MDAvatar from "components/MDAvatar";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/Hasnat.jpg";
-import backgroundImage from "assets/images/bg-profile.jpeg";
 
-function Header({ children, name }) {
+import backgroundImage from "assets/images/bg-profile.jpeg";
+import BASE_URL from "BASE_URL";
+import burceMars from "assets/images/noProfile.png";
+
+
+function Header({ children, name, image }) {
+
+  const result = image !== undefined ? image.replace("public", `${BASE_URL}`) : burceMars;
+  console.log(result);
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-
+  console.log(image);
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
     function handleTabsOrientation() {
@@ -66,6 +73,7 @@ function Header({ children, name }) {
 
   return (
     <MDBox position="relative" mb={5}>
+      {/* <img src={result} alt="Girl in a jacket" width="500" height="600"></img> */}
       <MDBox
         display="flex"
         alignItems="center"
@@ -94,7 +102,7 @@ function Header({ children, name }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            <MDAvatar src={result} alt="profile-image" size="xxl" shadow="inset" />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>

@@ -93,7 +93,6 @@ function UpdateProfile() {
           console.log(formData);
           const { data: imagePathData } = await uploadAdminProfilePic(formData);
           console.log(imagePathData.pfp);
-
           values.pfp = imagePathData.pfp;
         }
 

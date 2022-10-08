@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Dashboard from 'layouts/dashboard';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
-import homeDecor2 from "assets/images/home-decor-2.jpg";
+// import homeDecor2 from "assets/images/download.png";
 import { Stack } from '@mui/system';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
@@ -74,7 +74,7 @@ export default function MediaCard() {
                         <CardMedia>
                             <Stack direction="row" sx={{ width: '100%', overflow: 'auto' }} spacing={5} justifyContent="center">
 
-                                <ImageViewer />
+                                <ImageViewer images={gListing?.imagePaths} />
 
 
                             </Stack>

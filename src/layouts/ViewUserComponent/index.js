@@ -16,8 +16,8 @@ import Modal from '@mui/material/Modal';
 import { getUser } from 'api';
 import { useParams } from 'react-router-dom';
 
-
-
+import burceMars from "assets/images/noProfile.png";
+import BASE_URL from 'BASE_URL';
 
 
 export default function MediaCard() {
@@ -42,6 +42,8 @@ export default function MediaCard() {
         call();
     }
         , [])
+
+    const result = user.pfp !== undefined ? user.pfp.replace("public", `${BASE_URL}`) : burceMars;
     return (
         <>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -58,7 +60,7 @@ export default function MediaCard() {
                     <CardMedia
                         component="img"
                         height="240"
-                        image={homeDecor2}
+                        image={result}
                         alt="green iguana"
                     />
                     <CardContent>

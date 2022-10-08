@@ -186,7 +186,7 @@ function Dashboard() {
             </MDBox>
           </Grid> */}
         </Grid>
-        <MDBox mt={5} mb={4} lg={10} sx={{ textAlign: "center" }}>
+        <MDBox mt={5} mb={4} lg={10} sx={{ textAlign: "end" }}>
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Grid container spacing={3} >
@@ -203,7 +203,7 @@ function Dashboard() {
                     setDate(newValue);
                   }}
                   sx={{ width: "100%" }}
-                  renderInput={(params) => <TextField {...params} sx={{ width: "50%" }} />}
+                  renderInput={(params) => <TextField {...params} />}
                 />
               </Grid>
             </Grid>

@@ -1,11 +1,11 @@
 import axios from "axios";
 /*eslint-disable*/
 
+import BASE_URL from "BASE_URL";
 
-// const url = "http://localhost:5000/purchaseForm/post";
 const API = axios.create({
-	baseURL: "http://143.244.168.93:3000/",
-	// baseURL: "http://localhost:3000/",
+
+	baseURL: BASE_URL
 
 });
 const config = {

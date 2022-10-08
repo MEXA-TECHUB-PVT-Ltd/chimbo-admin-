@@ -43,7 +43,7 @@ import { uploadAdminProfilePic } from "api";
 
 function Cover() {
 
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState([]);
   const [error, setError] = useState();
   const navigate = useNavigate();
   const initialValues = {
@@ -63,13 +63,14 @@ function Cover() {
         let formData = new FormData();
         console.log(image);
 
+        if (image.length > 0) {
+          formData.append("profile-photo", image[0]);
+          console.log(formData);
+          const { data: imagePathData } = await uploadAdminProfilePic(formData);
+          console.log(imagePathData.pfp);
 
-        formData.append("profile-photo", image[0])
-        console.log(formData);
-        const { data: imagePathData } = await uploadAdminProfilePic(formData)
-        console.log(imagePathData.pfp);
-
-        values.pfp = imagePathData.pfp
+          values.pfp = imagePathData.pfp;
+        }
         const { data } = await authFormSignup(values)
         console.log(data);
         if (data.status == 200) {
@@ -116,7 +117,7 @@ function Cover() {
               </Typography>}
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="number" label="Phone No" variant="standard" name="phone No" value={values.phoneNo} onChange={handleChange} fullWidth />
+              <MDInput type="number" label="Phone No" variant="standard" name="phoneNo" value={values.phoneNo} onChange={handleChange} fullWidth />
               {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                 {errors.phoneNo}
               </Typography>}
@@ -143,15 +144,11 @@ function Cover() {
                     try {
                       const files = event.target.files;
                       console.log(files);
-                      // let myFiles = Array.from(files);
+                      let myFiles = Array.from(files);
                       // console.log(myFiles);
                       // const data = myFiles.map((item) => item.name)
-                      setImage(files);
-
-
-
-                    }
-                    catch (e) {
+                      setImage(myFiles);
+                    } catch (e) {
                       console.log(e);
                     }
                     // setFieldValue("imagePaths", data);
@@ -167,7 +164,9 @@ function Cover() {
               </Stack>
 
 
-              {<Typography>{image.name}</Typography>}
+              {image.map((item, index) => (
+                <Typography key={index}>{item.name}</Typography>
+              ))}
               {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                 {errors.pfp}
               </Typography>}

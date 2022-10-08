@@ -87,7 +87,7 @@ function Overview() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-      <Header name={adminData?.name}>
+      <Header name={adminData?.name} image={adminData?.pfp}>
         <MDBox mt={5} mb={3} mx={"auto"}>
           <Grid container spacing={1}>
             {/* <Grid item xs={12} md={6} xl={4}>
