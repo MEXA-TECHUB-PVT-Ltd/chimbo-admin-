@@ -45,7 +45,7 @@ const colors = {
   },
 
   primary: {
-    main: "#e91e63",
+    main: "#1A73E8",
     focus: "#e91e63",
   },
 
@@ -98,7 +98,7 @@ const colors = {
 
   gradients: {
     primary: {
-      main: "#EC407A",
+      main: "#49a3f1",
       state: "#D81B60",
     },
 

@@ -43,7 +43,7 @@ export default function MediaCard() {
     }
         , [])
 
-    const result = user.pfp !== undefined ? user.pfp.replace("public", `${BASE_URL}`) : burceMars;
+    const result = user?.pfp !== undefined ? user?.pfp.replace("public", `${BASE_URL}`) : burceMars;
     return (
         <>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -56,19 +56,19 @@ export default function MediaCard() {
 
             <DashboardLayout>
                 <DashboardNavbar />
-                {user.hasOwnProperty("name") ? <Card sx={{ maxWidth: 345, marginX: "auto" }}>
+                {user?.hasOwnProperty("name") ? <Card sx={{ maxWidth: 345, marginX: "auto" }}>
                     <CardMedia
                         component="img"
                         height="240"
                         image={result}
-                        alt="green iguana"
+                        alt="Profile Pic"
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             Name
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {user.name}
+                            {user?.name}
                         </Typography>
                     </CardContent>
                     <CardContent>
@@ -76,7 +76,7 @@ export default function MediaCard() {
                             Email
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {user.email}
+                            {user?.email}
                         </Typography>
                     </CardContent>
                     <CardContent>
@@ -84,7 +84,7 @@ export default function MediaCard() {
                             Gender
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {user.gender}
+                            {user?.gender}
                         </Typography>
                     </CardContent>
                     <CardContent>
@@ -92,7 +92,7 @@ export default function MediaCard() {
                             Phone No
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {user.phoneNo}
+                            {user?.phoneNo}
                         </Typography>
                     </CardContent>
                     <CardContent>
@@ -100,7 +100,7 @@ export default function MediaCard() {
                             Address
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {user.address}
+                            {user?.address}
                         </Typography>
                     </CardContent>
                     {/* <CardActions>

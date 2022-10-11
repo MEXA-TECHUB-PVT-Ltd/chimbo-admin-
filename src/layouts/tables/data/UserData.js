@@ -36,10 +36,13 @@ import { deleteRoomCharacteristics } from "api";
 import { getAllUsers } from "api";
 import { BlockUser } from "api";
 import { UnBlockUser } from "api";
-
-
-
-
+import Icon from "@mui/material/Icon";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import BlockIcon from '@mui/icons-material/Block';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 export const useViewUsers = async () => {
 
 
@@ -131,12 +134,24 @@ export const useViewUsers = async () => {
                 ),
                 View: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <Button href={`/userViews/${_id}`} >View</Button>
+                        <Tooltip title="Block">
+                            <IconButton sx={{ color: "#1A73E8" }} href={`/userViews/${_id}`} >
+                                <VisibilityIcon sx={{ mr: "5px" }} />
+                            </IconButton>
+                        </Tooltip>
                     </MDTypography >
                 ),
                 Block: (
                     <MDTypography variant="caption" color="text" fontWeight="medium" >
-                        <Button onClick={() => { handleClick(_id, isBlocked) }} sx={{ ...(isBlocked === false && { color: "red" }) }}>{isBlocked ? "UnBlock" : "Block"}</Button>
+
+                        <IconButton onClick={() => { handleClick(_id, isBlocked) }} sx={{ ...(isBlocked === false && { color: "red" }) }}>
+                            {isBlocked ? <Tooltip title="UnBlock">
+                                <LockOpenIcon />
+                            </Tooltip> : <Tooltip title="Block">
+                                <BlockIcon />
+                            </Tooltip>}
+                        </IconButton>
+
                     </MDTypography>
                 ),
 

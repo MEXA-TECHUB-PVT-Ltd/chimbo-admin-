@@ -25,14 +25,15 @@ import MDBadge from "components/MDBadge";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
-import { Button } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import { useState, useEffect } from "react";
 import { getAllHeatingTypes } from "api";
 import { deleteHeatingType } from "api";
 import { Navigate, useNavigate } from "react-router-dom";
 import Tables from "../index";
-
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateIcon from '@mui/icons-material/Update';
 
 
 export const useHeatingData = async () => {
@@ -97,7 +98,7 @@ export const useHeatingData = async () => {
                 ID: (
                     <MDBox ml={-1}>
 
-                        {_id}
+                        {index + 1}
                     </MDBox>
                 ),
                 Name: (
@@ -108,12 +109,20 @@ export const useHeatingData = async () => {
                 ),
                 Delete: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <Button onClick={() => { handleClick(_id) }}>Delete</Button>
+                        <IconButton onClick={() => { handleClick(_id) }}>
+                            <Tooltip title="Delete">
+                                <DeleteIcon sx={{ color: "#1A73E8" }} />
+                            </Tooltip>
+                        </IconButton>
                     </MDTypography>
                 ),
                 Update: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <Button href={`/heatingTypeForm/${_id}`}>Update</Button>
+                        <IconButton href={`/heatingTypeForm/${_id}`}>
+                            <Tooltip title="Update">
+                                <UpdateIcon sx={{ color: "#1A73E8" }} />
+                            </Tooltip>
+                        </IconButton>
                     </MDTypography>
                 ),
 

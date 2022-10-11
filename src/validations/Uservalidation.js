@@ -82,5 +82,6 @@ export const listingForm = yup.object().shape({
 	phone: yup.number().required("Phone No Required"),
 	yourName: yup.string().required("Name is Required"),
 	imagePaths: yup.array().required("Select Images and Video"),
+	floor: yup.string().required("Select FLoor Type"),
 
 });

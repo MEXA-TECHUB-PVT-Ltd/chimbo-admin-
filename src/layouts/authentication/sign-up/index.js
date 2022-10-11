@@ -183,7 +183,7 @@ function Cover() {
               </MDTypography>
               <MDTypography
                 component="a"
-                href="#"
+                href="/terms-policy"
                 variant="button"
                 fontWeight="bold"
                 color="info"

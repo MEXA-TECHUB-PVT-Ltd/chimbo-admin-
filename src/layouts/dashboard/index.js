@@ -34,7 +34,8 @@ import dayjs from 'dayjs';
 import { DatePicker, YearPicker } from '@mui/x-date-pickers';
 // import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
@@ -43,7 +44,11 @@ import { getCount } from "api";
 import MDTypography from "components/MDTypography";
 import { getCharData } from "api";
 import { TextField } from "@mui/material";
-
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import UpdateIcon from '@mui/icons-material/Update';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 
 function Dashboard() {
 
@@ -51,7 +56,7 @@ function Dashboard() {
     labels: ["Jan", "Feb", "Mar", "April", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: { label: "Sales", data: [50, 20, 10, 22, 50, 10, 40, 20, 30, 50, 60, 22] },
   };
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(format(new Date(), "yyyy"));
   const [count, setCount] = useState({});
   const [chartData, setChartData] = useState({});
   const { sales, tasks } = reportsLineChartData;
@@ -87,7 +92,7 @@ function Dashboard() {
   }
     , [])
 
-
+  console.log(date);
   useEffect(() => {
     async function call() {
       var monthArray = [];
@@ -193,8 +198,26 @@ function Dashboard() {
 
 
               <Grid item xs={12} md={12}>
+                {/* <FormControl sx={{ width: "30%" }}>
+                  <InputLabel id="demo-simple-select-label">Select year</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={date}
+                    onChange={(newValue) => { setDate(newValue) }}
+                    label="Select Year"
+                    IconComponent={() => <InsertInvitationIcon />}
+                    sx={{ height: "45px", '& .MuiSvgIcon-root': { marginRight: 2, display: "block", fontSize: "30px  !important" } }}
+                  >{[...Array(1000)].map((x, i) =>
+                    <MenuItem key={i} value={date}>{i + 2000}</MenuItem>
+
+                  )}
+
+                  </Select>
+                </FormControl> */}
                 <DatePicker
                   disableFuture
+
                   label="Pick an year"
                   openTo="year"
                   views={['year']}
@@ -202,7 +225,11 @@ function Dashboard() {
                   onChange={(newValue) => {
                     setDate(newValue);
                   }}
-                  sx={{ width: "100%" }}
+                  sx={{
+                    width: "100%", "&.PrivatePickersYear-button.Mui-selected": {
+                      backgroundColor: "#1890ff !important"
+                    }
+                  }}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Grid>

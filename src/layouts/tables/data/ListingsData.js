@@ -26,12 +26,13 @@ import MDBadge from "components/MDBadge";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
-import { Button } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import { useState, useEffect } from "react";
 import { getAllListings } from "api";
 import { deleteListing } from "api";
-
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateIcon from '@mui/icons-material/Update';
 export const useListingData = async (pageNo) => {
 
 
@@ -123,12 +124,20 @@ export const useListingData = async (pageNo) => {
         ),
         View: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Button href={`/views/${_id}`}>View</Button>
+            <IconButton href={`/views/${_id}`}>
+              <Tooltip title="view">
+                <VisibilityIcon sx={{ color: "#1A73E8" }} />
+              </Tooltip>
+            </IconButton>
           </MDTypography>
         ),
         Delete: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            <Button onClick={() => { handleClick(_id) }}>Delete</Button>
+            <IconButton onClick={() => { handleClick(_id) }}>
+              <Tooltip title="Delete">
+                <DeleteIcon sx={{ color: "#1A73E8" }} />
+              </Tooltip>
+            </IconButton>
           </MDTypography>
         ),
 

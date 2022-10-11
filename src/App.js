@@ -32,6 +32,7 @@ import PropertyTypeForm from "./layouts/propertyTypeForm"
 import RoomCharacteristics from "./layouts/roomCharacteristicsForm"
 import ViewComponent from "./layouts/ViewComponent"
 import ViewUserComponent from "./layouts/ViewUserComponent"
+import PrivacyPolicyTermsAndCondition from "layouts/PrivacyPolicyTermsAndCondition";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import AdminRoutesAuth from "AdminRoutesAuth";
@@ -154,6 +155,7 @@ export default function App() {
       {layout === "dashboard" && (
         <>
           <Sidenav
+            zIndex={-1}
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Chimbo Admin Panel"
@@ -178,6 +180,7 @@ export default function App() {
         <Route path="/otp" element={<EnterOtp />} />
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/" element={<SignIn />} />
+        <Route path="/terms-policy" element={<PrivacyPolicyTermsAndCondition />} />
 
 
         <Route element={<AdminRoutesAuth />}>

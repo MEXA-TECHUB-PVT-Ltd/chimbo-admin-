@@ -162,6 +162,15 @@ export default function MediaCard() {
                         </CardContent>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
+                                Floor
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
+                                {gListing?.floorName?.name}
+                            </Typography>
+                        </CardContent>
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
                                 Residential Address
                             </Typography>
                             <Typography variant="body2" color="text.secondary">

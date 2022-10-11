@@ -101,8 +101,8 @@ const ImageViewer = ({ images }) => {
             return (
               <img
                 src={item}
-                width="100%"
-                height="100%"
+                width="fit-content"
+                height="300"
                 onClick={() => {
                   handleOpen(index);
                 }}

@@ -80,6 +80,7 @@ function Basic() {
     const [listingFeatures, setListingFeatures] = useState([]);
     const [heatingType, setHeatingType] = useState([]);
     const [occupationType, setOccupationType] = useState([]);
+    const [floorType, setFloorType] = useState([]);
     const [gender, setGender] = useState([]);
     const [value, setValue] = useState(null);
     const [rememberMe, setRememberMe] = useState(false);
@@ -133,8 +134,8 @@ function Basic() {
         email: "",
         yourName: "",
         advertiser: "",
-        addedBy: "admin"
-
+        addedBy: "admin",
+        floor: ""
 
 
 
@@ -219,6 +220,7 @@ function Basic() {
                     setGender(IDs.genderIDs);
                     setOccupationType(IDs.occupationTypeIDs);
                     setAItem(IDs.accessibilityItemIDs);
+                    setFloorType(IDs.floorIDs);
                 }
 
             }
@@ -245,7 +247,7 @@ function Basic() {
 
 
 
-
+    console.log(floorType);
 
     console.log(images);
 
@@ -264,7 +266,7 @@ function Basic() {
                     <MDBox component="form" role="form">
                         <MDBox mb={2}>
                             {/* <MDInput type="email" label="Email" name="email" onChange={handleChange} fullWidth /> */}
-                            <FormControl fullWidth >
+                            <FormControl fullWidth InputLabelProps={{ shrink: false }}>
                                 <InputLabel id="demo-simple-select-label">Select Property Type</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -292,15 +294,15 @@ function Basic() {
                         </MDBox>
                         <MDBox mb={2}>
                             <FormControl fullWidth >
-                                <InputLabel id="demo-simple-select-label">Select Operation</InputLabel>
+                                <InputLabel id="demo-simple-select-label" >Select Opertation</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={values.listingTypeId}
-                                    label="Select Operation"
+                                    label="Select Opertation"
                                     onChange={handleChange}
                                     name="listingTypeId"
-                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" }, "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }}
 
 
                                 >
@@ -315,7 +317,7 @@ function Basic() {
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" value={values.location.coordinates} name="location" onClick={handleOpen} fullWidth />
+                            <MDInput type="text" value={values.location.coordinates} name="location" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }} onClick={handleOpen} placeholder="Set Location" fullWidth />
                             <Modal
                                 open={open}
                                 onClose={handleClose}
@@ -419,6 +421,31 @@ function Basic() {
                             <MDInput type="number" label="Add no of Baths" name="baths" onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.baths}
+                            </Typography>}
+                        </MDBox>
+
+                        <MDBox mb={2}>
+                            <FormControl fullWidth >
+                                <InputLabel id="demo-simple-select-label" >Select Floor Type</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={values.floor}
+                                    label="Select Floor Type"
+                                    onChange={handleChange}
+                                    name="floor"
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" }, "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }}
+
+
+                                >
+                                    {floorType?.map((value) =>
+
+                                        <MenuItem key={value._id} value={value._id}>{value.name}</MenuItem>
+                                    )}
+                                </Select>
+                            </FormControl>
+                            {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
+                                {errors.floor}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2} >
@@ -601,7 +628,9 @@ function Basic() {
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
+                            <FormLabel sx={{ fontSize: "15px" }}>Room Shared With </FormLabel>
                             <Grid container justifyContent="space-evenly">
+
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
                                     // defaultValue={Identity}
@@ -644,7 +673,7 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Available From </Typography>
-                        <MDInput type="date" label="" value={values.availableFrom} name="availableFrom" onChange={handleChange} fullWidth />
+                        <MDInput type="date" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} value={values.availableFrom} name="availableFrom" onChange={handleChange} fullWidth />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.availableFrom}
                         </Typography>}
@@ -652,7 +681,7 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>About the people currently living in the house </Typography>
-                        <MDInput type="number" label="" name="currentResidentCount" onChange={handleChange} fullWidth />
+                        <MDInput type="number" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} name="currentResidentCount" onChange={handleChange} fullWidth />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.currentResidentCount}
                         </Typography>}
@@ -723,7 +752,7 @@ function Basic() {
                         {/* <MDBox mb={2}> */}
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Minimum Stay </Typography>
-                        <MDInput label="" name="minStay" onChange={handleChange} fullWidth />
+                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} label="" name="minStay" onChange={handleChange} fullWidth />
 
                         {/* </MDBox> */}
                         {/* <FormControl fullWidth >
@@ -751,7 +780,7 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Price</Typography>
-                        <MDInput type="number" label="" name="price" onChange={handleChange} fullWidth />
+                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} type="number" label="" name="price" onChange={handleChange} fullWidth />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.price}
                         </Typography>}
@@ -759,13 +788,13 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Community Fees (Optional) </Typography>
-                        <MDInput type="number" label="" name="communityFee" onChange={handleChange} fullWidth />
+                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} type="number" label="" name="communityFee" onChange={handleChange} fullWidth />
 
                     </MDBox>
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Deposit (Optional) </Typography>
-                        <MDInput type="number" label="" name="deposit" onChange={handleChange} fullWidth />
+                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} type="number" label="" name="deposit" onChange={handleChange} fullWidth />
 
                     </MDBox>
                     <MDBox mb={2}>
