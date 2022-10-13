@@ -44,7 +44,7 @@ import { addRoomCharacteristic } from "api";
 import { useState, useEffect } from "react";
 import { getRoomCharacteristics } from "api";
 import { updateRoomCharacteristic } from "api";
-
+import swal from 'sweetalert';
 function Cover() {
     let { roomCharacteristicId } = useParams();
     const [name, setName] = useState("")
@@ -63,16 +63,18 @@ function Cover() {
                     const { data } = await addRoomCharacteristic(values);
                     console.log(data);
                     if (data.status == 200) {
-                        alert("Room Characteristic Added Successfully")
-                        navigate("/roomCha")
+                        await swal("Added!", `Room Characteristic ${data.roomCharacteristic.name} has been Added!`, "success");
+                        navigate("/roomCharacteristics")
                     }
                 }
                 else {
                     values.id = roomCharacteristicId;
+                    console.log(values);
                     const { data } = await updateRoomCharacteristic(values);
+                    console.log(data);
                     if (data.status == 200) {
-                        alert("Room Characteristic Updated Successfully")
-                        navigate("/roomCha")
+                        await swal("Updated!", `Room Characteristic has been Updated to ${data.roomCharacteristic.name}`, "success");
+                        navigate("/roomCharacteristics")
                     }
                 }
 
@@ -173,7 +175,7 @@ function Cover() {
                         </MDBox> */}
                         <MDBox mt={4} mb={1} sx={{ textAlign: "end" }}>
                             <MDButton variant="gradient" color="info" small="true" onClick={handleSubmit}>
-                                Add
+                                {roomCharacteristicId === "null" ? "Add" : "Update"}
                             </MDButton>
                         </MDBox>
                         {/* <MDBox mt={3} mb={1} textAlign="center">

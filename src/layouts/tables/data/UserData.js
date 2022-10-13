@@ -43,6 +43,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BlockIcon from '@mui/icons-material/Block';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import swal from 'sweetalert';
 export const useViewUsers = async () => {
 
 
@@ -67,13 +68,20 @@ export const useViewUsers = async () => {
 
     }
 
-    const handleClick = async (id, status) => {
+    const handleClick = async (id, status, name) => {
         try {
             const values = {};
             values.id = id;
             console.log(id);
+            const willBlock = await swal({
+                title: "Are you sure?",
+                text: `Are you sure that you want to ${status ? "UnBlock" : "Block"} ${name}?`,
+                icon: "warning",
+                dangerMode: true,
+            });
             let text = `Do you want to ${status ? "UnBlock" : "Block"}`;
-            if (confirm(text) == true) {
+            if (willBlock) {
+                await swal(`${status ? "UnBlocked!" : "Blocked!"}`, ` ${name} has been ${status ? "UnBlocked" : "Blocked"}`, "success");
                 console.log(typeof status)
                 if (status === false) {
 
@@ -134,8 +142,8 @@ export const useViewUsers = async () => {
                 ),
                 View: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <Tooltip title="Block">
-                            <IconButton sx={{ color: "#1A73E8" }} href={`/userViews/${_id}`} >
+                        <Tooltip title="View">
+                            <IconButton sx={{ color: "#1A73E8" }} href={`/users/userViews/${_id}`} >
                                 <VisibilityIcon sx={{ mr: "5px" }} />
                             </IconButton>
                         </Tooltip>
@@ -144,7 +152,7 @@ export const useViewUsers = async () => {
                 Block: (
                     <MDTypography variant="caption" color="text" fontWeight="medium" >
 
-                        <IconButton onClick={() => { handleClick(_id, isBlocked) }} sx={{ ...(isBlocked === false && { color: "red" }) }}>
+                        <IconButton onClick={() => { handleClick(_id, isBlocked, name) }} sx={{ ...(isBlocked === false && { color: "red" }) }}>
                             {isBlocked ? <Tooltip title="UnBlock">
                                 <LockOpenIcon />
                             </Tooltip> : <Tooltip title="Block">

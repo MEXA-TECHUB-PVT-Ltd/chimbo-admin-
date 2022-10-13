@@ -72,6 +72,8 @@ import { BasicGrid } from "./BasicGrid"
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import TablePage from "layouts/TablePage";
+import PrivacyPolicy from "layouts/privacyPolicy";
+import TermsAndConditions from "layouts/termsAndConditions";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -191,15 +193,17 @@ export default function App() {
           <Route path="/listing" element={<Tables name="Listings" />} />
           <Route path="/heatingTypes" element={<Tables name="Heating Types" />} />
           <Route path="/propertyTypes" element={<Tables name="Property Types" />} />
-          <Route path="/roomCha" element={<Tables name="Room Characteristics" />} />
-          <Route path="/listingForm" element={<Listing />} />
-          <Route path="/heatingTypeForm/:heatingTypeId" element={< HeatingTypeForm />} />
-          <Route path="/propertyTypeForm/:propertyTypeId" element={< PropertyTypeForm />} />
-          <Route path="/roomCharacteristicForm/:roomCharacteristicId" element={< RoomCharacteristics />} />
+          <Route path="/roomCharacteristics" element={<Tables name="Room Characteristics" />} />
+          <Route path="/listing/listingForm" element={<Listing />} />
+          <Route path="/heatingTypes/heatingTypeForm/:heatingTypeId" element={< HeatingTypeForm />} />
+          <Route path="/propertyTypes/propertyTypeForm/:propertyTypeId" element={< PropertyTypeForm />} />
+          <Route path="/roomCharacteristics/roomCharacteristicForm/:roomCharacteristicId" element={< RoomCharacteristics />} />
           <Route path="/users" element={<Tables name="Users" />} />
-          <Route path="/views/:listingID" element={<ViewComponent />} />
-          <Route path="/userViews/:userId" element={<ViewUserComponent />} />
-          <Route path="/updateProfile/:adminId" element={<UpdateProfile />} />
+          <Route path="/listing/views/:listingID" element={<ViewComponent />} />
+          <Route path="/users/userViews/:userId" element={<ViewUserComponent />} />
+          <Route path="/profile/updateProfile/:adminId" element={<UpdateProfile />} />
+          <Route path="/termsAndConditions" element={<TermsAndConditions />} />
+          <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
           <Route path="*" element={<Dashboard />} />
         </Route>
       </Routes>

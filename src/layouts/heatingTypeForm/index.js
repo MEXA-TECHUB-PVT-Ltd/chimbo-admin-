@@ -43,7 +43,7 @@ import { nameType } from "validations/Uservalidation";
 import { useEffect, useState } from "react";
 import { updateHeatingType } from "api";
 import { getHeatingType } from "api";
-
+import swal from 'sweetalert';
 function Cover() {
     let { heatingTypeId } = useParams();
     const [name, setName] = useState("")
@@ -64,7 +64,7 @@ function Cover() {
                     const { data } = await addHeatingType(values);
                     console.log(data);
                     if (data.status == 200) {
-                        alert("Heating Type Added Successfully")
+                        await swal("Added!", `Heating Type ${data.heatingType.name} has been Added!`, "success");
                         navigate("/heatingTypes")
                     }
                 }
@@ -72,7 +72,7 @@ function Cover() {
                     values.id = heatingTypeId;
                     const { data } = await updateHeatingType(values);
                     if (data.status == 200) {
-                        alert("Heating Type Updated Successfully")
+                        await swal("Updated!", `Heating Type has been Updated to  ${values.name}`, "success");
                         navigate("/heatingTypes")
                     }
                 }
@@ -129,7 +129,7 @@ function Cover() {
 
                         <MDBox mt={4} mb={1} sx={{ textAlign: "end" }}>
                             <MDButton variant="gradient" color="info" small="true" onClick={handleSubmit}>
-                                Add
+                                {heatingTypeId === "null" ? "Add" : "Update"}
                             </MDButton>
                         </MDBox>
 

@@ -31,6 +31,9 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Dashboard 2 React components
+import { IconButton, InputAdornment } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
@@ -49,6 +52,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const [type1, setType1] = useState("");
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const navigate = useNavigate();
   const initialValues = {
@@ -56,7 +60,9 @@ function Basic() {
     email: "",
 
   }
-
+  const handleShowPassword1 = () => {
+    type1 === "password" ? setType1("") : setType1("password");
+  };
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: adminLoginSchema,
@@ -90,7 +96,16 @@ function Basic() {
               </Typography>}
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" name="password" onChange={handleChange} fullWidth />
+              <MDInput label="Password" name="password" onChange={handleChange} fullWidth
+                type={type1 === "password" ? "password" : "text"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleShowPassword1}>{type1 === "password" ? <VisibilityOffIcon /> : <VisibilityIcon />}</IconButton>
+                    </InputAdornment>
+                  ),
+                  autoCapitalize: "none",
+                }} />
               {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                 {errors.password}
               </Typography>}

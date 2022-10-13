@@ -64,6 +64,9 @@ import GoogleMaps from "../../GoogleMaps"
 import { object } from "prop-types";
 import { addListing } from "api";
 import { uploadImagesAndVideos } from "api";
+import swal from 'sweetalert';
+import { useRef } from "react";
+
 function Basic() {
     const iconDisplay = {
         '&.MuiSvgIcon-root': {
@@ -91,9 +94,55 @@ function Basic() {
     const handleClose = () => setOpen(false);
     const [images, setImages] = useState([]);
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
+    const adminDetails = JSON.parse(localStorage.getItem("AdminCredentials"));
     const navigate = useNavigate();
 
-    const adminDetails = JSON.parse(localStorage.getItem("AdminCredentials"));
+
+
+
+
+
+
+    const propertyTypeId = useRef("");
+    const listingTypeId = useRef("");
+    const selectedSpecifications = useRef("");
+    const genderPreferenceId = useRef("");
+    const city = useRef("");
+    const streetName = useRef("");
+    const streetNo = useRef("");
+    const price = useRef("");
+    const heatingTypeId = useRef("");
+    const availableFrom = useRef("");
+    const roomSharedWith = useRef("");
+    const currentResidentCount = useRef("");
+    const isOwnerLivingInProperty = useRef("");
+    const occupationTypeId = useRef("");
+    const minStay = useRef("");
+    const imagePaths = useRef("");
+    const selectedRoomCharacteristics = useRef("");
+    const selectedFeatures = useRef("");
+    const selectedAccessibilityItems = useRef("")
+    const m2 = useRef("");
+    const baths = useRef("");
+    const beds = useRef("");
+    const location = useRef("");
+    const phone = useRef("");
+    const email = useRef("");
+    const yourName = useRef("");
+    const floor = useRef("");
+
+
+
+
+
+
+
+
+
+
+
+
+
     // console.log(admin;
     // const { id } = admin;
     const { admin } = adminDetails;
@@ -135,7 +184,8 @@ function Basic() {
         yourName: "",
         advertiser: "",
         addedBy: "admin",
-        floor: ""
+        floor: "",
+        pContact: ""
 
 
 
@@ -148,6 +198,7 @@ function Basic() {
     }
 
     const { values, errors, handleChange, handleSubmit, setFieldValue } = useFormik({
+
         initialValues: initialValues,
         validationSchema: listingForm,
         onSubmit: async (values) => {
@@ -168,7 +219,7 @@ function Basic() {
                 values.advertiser = id
                 const { data: listingResp } = await addListing(values)
                 if (listingResp.status == 200) {
-                    alert("listing Added Successfully")
+                    await swal("Added!", `Listing has been Added!`, "success");
                     navigate("/listing")
                 }
             }
@@ -180,6 +231,86 @@ function Basic() {
     })
     console.log(errors);
     console.log(values);
+    const handleClick = () => {
+
+        if (values.propertyTypeId === "") {
+            propertyTypeId.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.listingTypeId === "") {
+            listingTypeId.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.location.coordinates.length === 0) {
+            location.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.city === "") {
+            city.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.streetName === "") {
+            streetName.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.streetNo === "") {
+            streetNo.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.email === "") {
+            email.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.phone === "") {
+            phone.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.phone === "") {
+            phone.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.m2 === "") {
+            m2.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.beds === "") {
+            beds.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.baths === "") {
+            baths.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.floor === "") {
+            floor.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.selectedRoomCharacteristics === "") {
+            selectedRoomCharacteristics.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.selectedFeatures === "") {
+            selectedFeatures.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.selectedAccessibilityItems === "") {
+            selectedAccessibilityItems.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.heatingTypeId === "") {
+            heatingTypeId.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.roomSharedWith === "") {
+            roomSharedWith.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.availableFrom === "") {
+            availableFrom.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.currentResidentCount === "") {
+            currentResidentCount.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.isOwnerLivingInProperty === "") {
+            isOwnerLivingInProperty.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.genderPreferenceId === "") {
+            genderPreferenceId.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.occupationTypeId === "") {
+            occupationTypeId.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.minStay === "") {
+            minStay.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+        else if (values.price === "") {
+            price.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
+        }
+
+
+    }
 
     // const handlePropertyChange = (e) => {
     //     setProperty(e.target.value)
@@ -275,6 +406,7 @@ function Basic() {
                                     label="Select Property Type"
                                     onChange={handleChange}
                                     name="propertyTypeId"
+                                    ref={propertyTypeId}
                                     sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
 
 
@@ -302,6 +434,7 @@ function Basic() {
                                     label="Select Opertation"
                                     onChange={handleChange}
                                     name="listingTypeId"
+                                    ref={listingTypeId}
                                     sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" }, "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }}
 
 
@@ -317,7 +450,7 @@ function Basic() {
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" value={values.location.coordinates} name="location" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }} onClick={handleOpen} placeholder="Set Location" fullWidth />
+                            <MDInput type="text" ref={location} value={values.location.coordinates} name="location" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none", }, color: "black" }} onClick={handleOpen} placeholder="Set Location" fullWidth />
                             <Modal
                                 open={open}
                                 onClose={handleClose}
@@ -339,19 +472,19 @@ function Basic() {
                             </Typography>} */}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="city/town" name="city" onChange={handleChange} fullWidth />
+                            <MDInput type="text" label="city/town" name="city" value={values.city} ref={city} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.city}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Street Name" name="streetName" onChange={handleChange} fullWidth />
+                            <MDInput type="text" label="Street Name" name="streetName" value={values.streetName} ref={streetName} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.streetName}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Number" name="streetNo" onChange={handleChange} fullWidth />
+                            <MDInput type="text" label="Number" name="streetNo" value={values.streetNo} ref={streetNo} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.streetNo}
                             </Typography>}
@@ -363,25 +496,25 @@ function Basic() {
                             </Typography>} */}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="email" label="Email" name="email" onChange={handleChange} fullWidth />
+                            <MDInput type="email" label="Email" name="email" value={values.email} ref={email} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.email}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="number" label="Phone" name="phone" onChange={handleChange} fullWidth />
+                            <MDInput type="number" label="Phone" name="phone" value={values.phone} ref={phone} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.phone}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Your Name" name="yourName" onChange={handleChange} fullWidth />
+                            <MDInput type="text" label="Your Name" name="yourName" value={values.yourName} ref={yourName} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.yourName}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="text" label="Select Preferable Contact" name="pContact" onChange={handleChange} fullWidth />
+                            <MDInput type="number" label="Select Preferable Contact" name="pContact" onChange={handleChange} fullWidth />
                             {/* {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.password}
                             </Typography>} */}
@@ -406,19 +539,19 @@ function Basic() {
                             </FormControl>
                         </MDBox> */}
                         <MDBox mb={2}>
-                            <MDInput type="number" label="M2 of house" name="m2" onChange={handleChange} fullWidth />
+                            <MDInput type="number" label="M2 of house" name="m2" value={values.m2} ref={m2} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.m2}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="number" label="Add no of Beds" name="beds" onChange={handleChange} fullWidth />
+                            <MDInput type="number" label="Add no of Beds" name="beds" value={values.beds} ref={beds} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.beds}
                             </Typography>}
                         </MDBox>
                         <MDBox mb={2}>
-                            <MDInput type="number" label="Add no of Baths" name="baths" onChange={handleChange} fullWidth />
+                            <MDInput type="number" label="Add no of Baths" name="baths" value={values.baths} ref={baths} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                                 {errors.baths}
                             </Typography>}
@@ -433,6 +566,7 @@ function Basic() {
                                     value={values.floor}
                                     label="Select Floor Type"
                                     onChange={handleChange}
+                                    ref={floor}
                                     name="floor"
                                     sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" }, "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }}
 
@@ -458,6 +592,7 @@ function Basic() {
                                     name="selectedSpecifications[0].id"
                                     sx={{ fontSize: "10px", width: "100%" }}
                                     onChange={handleChange}
+                                    ref={selectedSpecifications}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
@@ -567,7 +702,7 @@ function Basic() {
 
                         <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Room Characteristics </FormLabel>
-                            <FormGroup >
+                            <FormGroup ref={selectedRoomCharacteristics}>
                                 {
                                     RoomCharacteristics.map((item, index) =>
                                         <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} value={item._id} control={<Checkbox name={`selectedRoomCharacteristics[${index}].id`} onChange={handleChange} />} label={item.name} />
@@ -581,7 +716,7 @@ function Basic() {
                         </MDBox>
                         <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Features of Building </FormLabel>
-                            <FormGroup >{
+                            <FormGroup ref={selectedFeatures}>{
                                 listingFeatures.map((item, index) =>
                                     <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox name={`selectedFeatures[${index}].id`} value={item._id} onChange={handleChange} />} label={item.name} />
                                 )}
@@ -594,7 +729,7 @@ function Basic() {
                             <FormLabel sx={{ fontSize: "15px" }} id="">Is the property adapted for people with
                                 reduced mobilty? </FormLabel>
 
-                            <FormGroup >
+                            <FormGroup ref={selectedAccessibilityItems} >
                                 {accessibilityItem.map((item, index) =>
                                     <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal", width: "90%", marginTop: "20px" } }} control={<Checkbox name={`selectedAccessibilityItems[${index}].id`} value={item._id} onChange={handleChange} />} label={item.name} />
                                 )}
@@ -613,6 +748,7 @@ function Basic() {
                                     label="Select Operation"
                                     onChange={handleChange}
                                     name="heatingTypeId"
+                                    ref={heatingTypeId}
                                     sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
 
 
@@ -638,6 +774,7 @@ function Basic() {
                                     name="roomSharedWith"
                                     sx={{ fontSize: "10px", width: "100%" }}
                                     onChange={handleChange}
+                                    ref={roomSharedWith}
                                 >
                                     <Grid container justifyContent="space-evenly" >
                                         <Grid item>
@@ -661,19 +798,19 @@ function Basic() {
                                 {errors.roomSharedWith}
                             </Typography>}
                         </MDBox>
-                        <MDBox mb={2}>
+                        {/* <MDBox mb={2}>
                             <FormLabel sx={{ fontSize: "15px" }} id="">Other Features of Property </FormLabel>
                             <FormGroup >
                                 <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox defaultChecked />} label="Air Condition" />
                                 <FormControlLabel sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox />} label="Lift" />
                             </FormGroup>
-                        </MDBox>
+                        </MDBox> */}
 
                     </MDBox>
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Available From </Typography>
-                        <MDInput type="date" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} value={values.availableFrom} name="availableFrom" onChange={handleChange} fullWidth />
+                        <MDInput type="date" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} value={values.availableFrom} ref={availableFrom} name="availableFrom" onChange={handleChange} fullWidth />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.availableFrom}
                         </Typography>}
@@ -681,7 +818,7 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>About the people currently living in the house </Typography>
-                        <MDInput type="number" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} name="currentResidentCount" onChange={handleChange} fullWidth />
+                        <MDInput type="number" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} name="currentResidentCount" ref={currentResidentCount} onChange={handleChange} fullWidth />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.currentResidentCount}
                         </Typography>}
@@ -696,7 +833,7 @@ function Basic() {
                                 value={values.isOwnerLivingInProperty}
                                 onChange={handleChange}
                                 sx={{ fontSize: "10px", width: "100%" }}
-
+                                ref={isOwnerLivingInProperty}
                             >
                                 <Grid container justifyContent="space-evenly" >
                                     <Grid item>
@@ -724,7 +861,7 @@ function Basic() {
                                 onChange={handleChange}
                                 name="genderPreferenceId"
                                 sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
-
+                                ref={genderPreferenceId}
 
                             >
                                 {gender?.map((value) =>
@@ -739,7 +876,7 @@ function Basic() {
                     </MDBox>
                     <MDBox mb={2}>
                         <FormLabel sx={{ fontSize: "15px" }} id="">Occupation </FormLabel>
-                        <FormGroup >
+                        <FormGroup ref={occupationTypeId}>
                             {occupationType.map((item, index) =>
                                 <FormControlLabel key={item._id} sx={{ "& .MuiFormControlLabel-label": { fontWeight: "normal" } }} control={<Checkbox name={`occupationTypeId[${index}].id`} value={item._id} onChange={handleChange} />} label={item.name} />
                             )}
@@ -752,7 +889,7 @@ function Basic() {
                         {/* <MDBox mb={2}> */}
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Minimum Stay </Typography>
-                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} label="" name="minStay" onChange={handleChange} fullWidth />
+                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} label="" ref={minStay} name="minStay" onChange={handleChange} fullWidth />
 
                         {/* </MDBox> */}
                         {/* <FormControl fullWidth >
@@ -780,7 +917,7 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Price</Typography>
-                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} type="number" label="" name="price" onChange={handleChange} fullWidth />
+                        <MDInput sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} type="number" label="" name="price" ref={price} onChange={handleChange} fullWidth />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.price}
                         </Typography>}
@@ -799,7 +936,7 @@ function Basic() {
                     </MDBox>
                     <MDBox mb={2}>
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Upload Images </Typography>
-                        <Stack direction="row" alignItems="center" spacing={2}>
+                        <Stack direction="row" alignItems="center" spacing={2} ref={imagePaths}>
                             <MDButton variant="contained" color="info" component="label" >
                                 Upload
                                 <input hidden accept="image/* video/*" multiple type="file" onChange={(event) => {
@@ -848,8 +985,13 @@ function Basic() {
                             />
                         </LocalizationProvider> */}
                     {/* </MDBox> */}
-                    <MDBox mt={4} mb={1}>
+                    {/* <MDBox mt={4} mb={1}>
                         <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
+                            save
+                        </MDButton>
+                    </MDBox> */}
+                    <MDBox mt={4} mb={1}>
+                        <MDButton variant="gradient" color="info" fullWidth onClick={() => { handleSubmit(); handleClick() }} >
                             save
                         </MDButton>
                     </MDBox>

@@ -53,12 +53,29 @@ import {
   setOpenConfigurator,
 } from "context";
 
+
 function DashboardNavbar({ absolute, light, isMini }) {
+
+  let regExp = /[0-9A-Fa-f]{6}/g;
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
-  const route = useLocation().pathname.split("/").slice(1);
+  let route = useLocation().pathname.split("/").slice(1);
+  route = route.filter((el) => {
+    console.log(regExp.test(el));
+    return !regExp.test(el) && el
+
+  })
+  route = route.filter((el) => {
+    console.log(regExp.test(el));
+    return el !== "null" && el
+
+  })
+
+
+
+
 
   useEffect(() => {
     // Setting the navbar type
@@ -131,7 +148,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          {/* <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} /> */}
+          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>

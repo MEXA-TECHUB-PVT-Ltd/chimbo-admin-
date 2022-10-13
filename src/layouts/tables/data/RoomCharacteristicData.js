@@ -36,7 +36,7 @@ import { deleteRoomCharacteristics } from "api";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
-
+import swal from 'sweetalert';
 
 export const useRoomCharacteristicData = async () => {
 
@@ -62,11 +62,17 @@ export const useRoomCharacteristicData = async () => {
 
     }
 
-    const handleClick = async (id) => {
+    const handleClick = async (id, name) => {
         try {
-
+            const willDelete = await swal({
+                title: "Are you sure?",
+                text: `Are you sure that you want to delete ${name}?`,
+                icon: "warning",
+                dangerMode: true,
+            });
             let text = "Do you want to delete?";
-            if (confirm(text) == true) {
+            if (willDelete) {
+                await swal("Deleted!", `Room Characteristic ${name} has been deleted!`, "success");
                 const { data } = await deleteRoomCharacteristics(id);
                 console.log(data);
                 if (data.status === 200) {
@@ -108,7 +114,7 @@ export const useRoomCharacteristicData = async () => {
                 ),
                 Delete: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <IconButton onClick={() => { handleClick(_id) }}>
+                        <IconButton onClick={() => { handleClick(_id, name) }}>
                             <Tooltip title="Delete">
                                 <DeleteIcon sx={{ color: "#1A73E8" }} />
                             </Tooltip>
@@ -117,7 +123,7 @@ export const useRoomCharacteristicData = async () => {
                 ),
                 Update: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <IconButton href={`/roomCharacteristicForm/${_id}`}>
+                        <IconButton href={`/roomCharacteristics/roomCharacteristicForm/${_id}`}>
                             <Tooltip title="Update">
                                 <UpdateIcon sx={{ color: "#1A73E8" }} />
                             </Tooltip>

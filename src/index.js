@@ -13,7 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 /*eslint-disable*/
-
+import { store } from './app/store'
+import { Provider } from 'react-redux'
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -23,11 +24,13 @@ import { createRoot } from 'react-dom/client'
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <MaterialUIControllerProvider>
-      <App />
-    </MaterialUIControllerProvider>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <MaterialUIControllerProvider>
+        <App />
+      </MaterialUIControllerProvider>
+    </BrowserRouter>
+  </Provider>
   // ReactDOM.render(
   //   <BrowserRouter>
   //     <MaterialUIControllerProvider>

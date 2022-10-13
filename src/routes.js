@@ -133,9 +133,9 @@ const routes = [
   {
     type: "collapse",
     name: "Room Characteristics",
-    key: "roomCha",
+    key: "roomCharacteristics",
     icon: <Icon fontSize="small">house-blank</Icon>,
-    route: "/roomCha",
+    route: "/roomCharacteristics",
 
   },
   {
@@ -144,6 +144,23 @@ const routes = [
     key: "users",
     icon: <Icon fontSize="small">people</Icon>,
     route: "/users",
+
+  },
+
+  {
+    type: "collapse",
+    name: "Terms And Conditions",
+    key: "termsAndConditions",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/termsAndConditions",
+
+  },
+  {
+    type: "collapse",
+    name: "Privacy Policy",
+    key: "privacyPolicy",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/privacyPolicy",
 
   },
   {

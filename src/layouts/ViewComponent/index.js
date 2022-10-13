@@ -261,6 +261,15 @@ export default function MediaCard() {
                         </CardContent>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
+                                Preferred Contant No
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                <FiberManualRecordIcon sx={{ fontSize: "11px !important", marginRight: "5px" }} />
+                                {gListing?.pContact}
+                            </Typography>
+                        </CardContent>
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
 
                                 Advertiser
                             </Typography>

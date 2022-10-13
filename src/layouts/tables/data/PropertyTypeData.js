@@ -37,7 +37,7 @@ import { deletePropertyType } from "api";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
-
+import swal from 'sweetalert';
 
 export const usePropertyData = async () => {
 
@@ -63,15 +63,22 @@ export const usePropertyData = async () => {
 
     }
 
-    const handleClick = async (id) => {
+    const handleClick = async (id, name) => {
         try {
+            const willDelete = await swal({
+                title: "Are you sure?",
+                text: `Are you sure that you want to delete ${name}?`,
+                icon: "warning",
+                dangerMode: true,
+            });
             let text = "Do you want to delete?";
-            if (confirm(text) == true) {
+            if (willDelete) {
+                await swal("Deleted!", `Property Type ${name} has been deleted!`, "success");
                 const { data } = await deletePropertyType(id);
                 console.log(data);
                 if (data.status === 200) {
-                    // return <Tables name="Heating Types" />
                     window.location.reload(false);
+                    // return <Tables name="Heating Types" />
                 }
             } else {
 
@@ -111,7 +118,7 @@ export const usePropertyData = async () => {
                 ),
                 Delete: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <IconButton onClick={() => { handleClick(_id) }}>
+                        <IconButton onClick={() => { handleClick(_id, name) }}>
                             <Tooltip title="Delete">
                                 <DeleteIcon sx={{ color: "#1A73E8" }} />
                             </Tooltip>
@@ -120,7 +127,7 @@ export const usePropertyData = async () => {
                 ),
                 Update: (
                     <MDTypography variant="caption" color="text" fontWeight="medium">
-                        <IconButton href={`/propertyTypeForm/${_id}`}>
+                        <IconButton href={`/propertyTypes/propertyTypeForm/${_id}`}>
                             <Tooltip title="Update">
                                 <UpdateIcon sx={{ color: "#1A73E8" }} />
                             </Tooltip>

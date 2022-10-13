@@ -20,7 +20,9 @@ import { Link } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
-
+import { IconButton, InputAdornment } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Typography } from "@mui/material";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -40,11 +42,13 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useState } from "react";
 import { upload } from "@testing-library/user-event/dist/upload";
 import { uploadAdminProfilePic } from "api";
-
+import { useSelector, useDispatch } from 'react-redux'
+import { storeSignupFormData } from '../../../features/signupFormDataSlice'
 function Cover() {
 
   const [image, setImage] = useState([]);
   const [error, setError] = useState();
+  const [type1, setType1] = useState("");
   const navigate = useNavigate();
   const initialValues = {
     name: "",
@@ -54,7 +58,10 @@ function Cover() {
     pfp: "",
     phoneNo: ""
   }
-
+  const dispatch = useDispatch()
+  const handleShowPassword1 = () => {
+    type1 === "password" ? setType1("") : setType1("password");
+  };
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: adminSignUpSchema,
@@ -129,7 +136,17 @@ function Cover() {
               </Typography>}
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" name="password" value={values.password} onChange={handleChange} fullWidth />
+              <MDInput label="Password" variant="standard" name="password" value={values.password}
+                type={type1 === "password" ? "password" : "text"}
+                onChange={handleChange} fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleShowPassword1}>{type1 === "password" ? <VisibilityOffIcon /> : <VisibilityIcon />}</IconButton>
+                    </InputAdornment>
+                  ),
+                  autoCapitalize: "none",
+                }} />
               {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                 {errors.password}
               </Typography>}
@@ -145,6 +162,7 @@ function Cover() {
                       const files = event.target.files;
                       console.log(files);
                       let myFiles = Array.from(files);
+
                       // console.log(myFiles);
                       // const data = myFiles.map((item) => item.name)
                       setImage(myFiles);
@@ -172,7 +190,8 @@ function Cover() {
               </Typography>}
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox name="acceptedTerms" onChange={handleChange} value={true} />
+              <Checkbox name="acceptedTerms" onChange={handleChange}
+                value={true} />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
@@ -182,8 +201,10 @@ function Cover() {
                 &nbsp;&nbsp;I agree the&nbsp;
               </MDTypography>
               <MDTypography
+
                 component="a"
                 href="/terms-policy"
+                target="_blank"
                 variant="button"
                 fontWeight="bold"
                 color="info"

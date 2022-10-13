@@ -33,6 +33,7 @@ import { deleteListing } from "api";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
+import swal from 'sweetalert';
 export const useListingData = async (pageNo) => {
 
 
@@ -49,8 +50,17 @@ export const useListingData = async (pageNo) => {
   }
   const handleClick = async (id) => {
     try {
+
+
+      const willDelete = await swal({
+        title: "Are you sure?",
+        text: `Are you sure that you want to delete this Listing?`,
+        icon: "warning",
+        dangerMode: true,
+      });
       let text = "Do you want to delete?";
-      if (confirm(text) == true) {
+      if (willDelete) {
+        await swal("Deleted!", `This Listing has been deleted!`, "success");
         const { data } = await deleteListing(id);
         console.log(data);
         if (data.status === 200) {
@@ -124,7 +134,7 @@ export const useListingData = async (pageNo) => {
         ),
         View: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            <IconButton href={`/views/${_id}`}>
+            <IconButton href={`/listing/views/${_id}`}>
               <Tooltip title="view">
                 <VisibilityIcon sx={{ color: "#1A73E8" }} />
               </Tooltip>

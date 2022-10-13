@@ -121,19 +121,19 @@ function Tables({ name }) {
 
     if (name === "Listings") {
 
-      navigate("/listingForm")
+      navigate("/listing/listingForm")
     }
     else if (name === "Heating Types") {
 
-      navigate("/heatingTypeForm/null")
+      navigate("/heatingTypes/heatingTypeForm/null")
     }
     else if (name === "Property Types") {
 
-      navigate("/propertyTypeForm/null")
+      navigate("/propertyTypes/propertyTypeForm/null")
     }
     else if (name === "Room Characteristics") {
 
-      navigate("/roomCharacteristicForm/null")
+      navigate("/roomCharacteristics/roomCharacteristicForm/null")
     }
 
 

@@ -44,7 +44,7 @@ import { addPropertType } from "api";
 import { getPropertyTypes } from "api";
 import { updatePropertyType } from "api";
 import { useState, useEffect } from "react";
-
+import swal from 'sweetalert';
 function Cover() {
     let { propertyTypeId } = useParams();
     const [name, setName] = useState("");
@@ -64,7 +64,7 @@ function Cover() {
                     const { data } = await addPropertType(values);
                     console.log(data);
                     if (data.status == 200) {
-                        alert("Property Type Added Successfully")
+                        await swal("Added!", `Property Type ${data.propertyType.name} has been Added!`, "success");
                         navigate("/propertyTypes")
                     }
                 }
@@ -72,7 +72,7 @@ function Cover() {
                     values.id = propertyTypeId;
                     const { data } = await updatePropertyType(values);
                     if (data.status == 200) {
-                        alert("Property Type Updated Successfully")
+                        await swal("Updated!", `Property Type  has been Updated to ${values.name}`, "success");
                         navigate("/propertyTypes")
                     }
                 }
@@ -178,7 +178,7 @@ function Cover() {
                         </MDBox> */}
                         <MDBox mt={4} mb={1} sx={{ textAlign: "end" }}>
                             <MDButton variant="gradient" color="info" small="true" onClick={handleSubmit}>
-                                Add
+                                {propertyTypeId === "null" ? "Add" : "Update"}
                             </MDButton>
                         </MDBox>
                         {/* <MDBox mt={3} mb={1} textAlign="center">
