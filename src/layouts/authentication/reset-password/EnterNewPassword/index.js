@@ -33,7 +33,7 @@ import { useFormik } from "formik";
 import { changePassword } from "api";
 import { enternewPassword } from "validations/Uservalidation";
 import { Typography } from "@mui/material";
-
+import swal from 'sweetalert';
 function Cover() {
 
   const [error, setError] = useState("");
@@ -54,7 +54,7 @@ function Cover() {
         console.log(data);
 
         if (data.status == 200) {
-          alert("Password changed Successfully")
+          await swal("Updated!", `This Password has been successfully updated!`, "success");
           localStorage.removeItem("adminId")
           navigate("/authentication/sign-in")
 

@@ -151,7 +151,7 @@ const routes = [
     type: "collapse",
     name: "Terms And Conditions",
     key: "termsAndConditions",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">blinds</Icon>,
     route: "/termsAndConditions",
 
   },
@@ -159,7 +159,7 @@ const routes = [
     type: "collapse",
     name: "Privacy Policy",
     key: "privacyPolicy",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">blinds</Icon>,
     route: "/privacyPolicy",
 
   },

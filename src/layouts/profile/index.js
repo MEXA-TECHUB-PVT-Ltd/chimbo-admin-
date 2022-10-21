@@ -110,7 +110,7 @@ function Overview() {
                 shadow={false}
               />
               <MDTypography variant="body2" color="secondary" sx={{ cursor: "pointer" }} onClick={() => {
-                navigate(`/updateProfile/${adminData?._id}`)
+                navigate(`/profile/updateProfile/${adminData?._id}`)
               }}>
                 <Tooltip title={"edit"} placement="top">
                   <Icon>edit</Icon>

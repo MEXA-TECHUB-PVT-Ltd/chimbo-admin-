@@ -86,6 +86,9 @@ function Cover() {
       }
       catch (e) {
         console.log(e);
+        setTimeout(() => {
+          setError("");
+        }, 2000);
         setError(e?.response?.data?.message)
       }
     }

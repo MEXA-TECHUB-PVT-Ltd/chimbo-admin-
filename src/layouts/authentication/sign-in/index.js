@@ -78,6 +78,9 @@ function Basic() {
       catch (e) {
         console.log(e.response.data);
         setError(e.response.data.message);
+        setTimeout(() => {
+          setError("");
+        }, 2000);
       }
     }
   })
