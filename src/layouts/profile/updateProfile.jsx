@@ -46,7 +46,7 @@ import { useEffect } from "react";
 import { getAdminByID } from "api";
 import { updateAdminProfile } from "api";
 import { adminUpdateSchema } from "validations/Uservalidation";
-
+import swal from "sweetalert";
 function UpdateProfile() {
   const [adminData, setAdminData] = useState();
   const { adminId } = useParams();
@@ -99,7 +99,7 @@ function UpdateProfile() {
         const { data } = await updateAdminProfile(values);
         console.log(data);
         if (data.status == 200) {
-          alert(data.message);
+          swal(data.message);
           navigate("/profile");
         }
       } catch (e) {

@@ -44,6 +44,7 @@ import { usePropertyData } from "./data/PropertyTypeData";
 import { useRoomCharacteristicData } from "./data/RoomCharacteristicData";
 import { useViewUsers } from "./data/UserData";
 import { Box } from "@mui/system";
+import swal from "sweetalert";
 import { Button } from "@mui/material";
 function Tables({ name }) {
   const [columns, setColumns] = useState([])
@@ -52,7 +53,11 @@ function Tables({ name }) {
   const navigate = useNavigate();
   const [pageNo, setPageNo] = useState(1)
   // const [loading, Isloading] = useState(true);
+  const url = new URL(window.location.href);
 
+  if (url.searchParams.has('action')) {
+    swal("Deleted!", `Deleted`, "success")
+  }
 
   async function call() {
     if (name === "Listings") {
@@ -150,7 +155,7 @@ function Tables({ name }) {
 
         <MDBox sx={{ textAlign: "end" }}>
           {name !== "Users" && <MDButton variant="gradient" color="info" small="true" onClick={handleClick} >
-            Add {name} +
+            Add {name}
           </MDButton>}
         </MDBox>
         {(columns.length === 0 && rows.length === 0) ? <Box sx={{ textAlign: "center" }}> <RotatingLines strokeColor="grey" strokeWidth="3" animationDuration="0.75" width="40" visible={true} /> </Box> :

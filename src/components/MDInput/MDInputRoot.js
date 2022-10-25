@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
+/*eslint-disable*/
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
@@ -26,6 +27,19 @@ export default styled(TextField)(({ theme, ownerState }) => {
 
   // styles for the input with error={true}
   const errorStyles = () => ({
+    "input[type='date']::CalendarPickerIndicator ": {
+      backgroundPosition: "right",
+      bottom: 0,
+      backgroundSize: "auto",
+      color: "transparent",
+      cursor: "pointer",
+      height: "auto",
+      left: 0,
+      position: "absolute",
+      right: 0,
+      top: 0,
+      width: "auto"
+    },
     backgroundImage:
       "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23F44335' viewBox='0 0 12 12'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3E%3Ccircle cx='6' cy='8.2' r='.6' fill='%23F44335' stroke='none'/%3E%3C/svg%3E\")",
     backgroundRepeat: "no-repeat",
@@ -45,6 +59,19 @@ export default styled(TextField)(({ theme, ownerState }) => {
 
   // styles for the input with success={true}
   const successStyles = () => ({
+    "input[type='date']::-webkit-calendar-picker-indicator ": {
+      backgroundPosition: "right",
+      bottom: 0,
+      backgroundSize: "auto",
+      color: "transparent",
+      cursor: "pointer",
+      height: "auto",
+      left: 0,
+      position: "absolute",
+      right: 0,
+      top: 0,
+      width: "auto"
+    },
     backgroundImage:
       "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpath fill='%234CAF50' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3E%3C/svg%3E\")",
     backgroundRepeat: "no-repeat",

@@ -36,6 +36,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
 
 import swal from 'sweetalert';
+import { WindowSharp } from "@mui/icons-material";
 export const useHeatingData = async () => {
 
     // const navigate = useNavigate();
@@ -75,12 +76,15 @@ export const useHeatingData = async () => {
 
             // console.log(chk);
             if (willDelete) {
-                await swal("Deleted!", `Heating Type ${name} has been deleted!`, "success");
+
                 const { data } = await deleteHeatingType(id);
                 console.log(data);
                 if (data.status === 200) {
+                    window.location.href = "/heatingTypes?action=done";
+
+                    // swal("Deleted!", `Heating Type ${name} has been deleted!`, "success").then(window.location.reload(true));
+                    // window.location.reload(true);
                     // return <Tables name="Heating Types" />
-                    window.location.reload(false);
                 }
             } else {
 
@@ -149,6 +153,7 @@ export const useHeatingData = async () => {
     }
 
     const arrayData = await chk2();
+
 
 
 

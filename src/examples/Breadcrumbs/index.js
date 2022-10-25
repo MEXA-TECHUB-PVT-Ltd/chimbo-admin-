@@ -40,7 +40,7 @@ function Breadcrumbs({ icon, title, route, light }) {
           },
         }}
       >
-        <Link to={`/${routes[0]}`} style={{ ...(routes.length === 0 && { pointerEvents: 'none' }) }}>
+        <Link to={`/dashboard`}>
 
           <MDTypography
             component="span"

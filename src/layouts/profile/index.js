@@ -103,7 +103,7 @@ function Overview() {
                   fullName: adminData?.name,
                   mobile: adminData?.phoneNo,
                   email: adminData?.email,
-                  id: adminData?._id,
+
                 }}
 
                 action={{ route: "", tooltip: "Edit Profile" }}

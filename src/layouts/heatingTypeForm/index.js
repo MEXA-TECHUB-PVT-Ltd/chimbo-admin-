@@ -79,7 +79,8 @@ function Cover() {
             }
             catch (e) {
                 console.log(e.response.data);
-                alert(e.response.data.message)
+                await swal(e.response.data.message);
+                // alert(e.response.data.message)
             }
         }
     })
@@ -116,10 +117,10 @@ function Cover() {
         <DashboardLayout>
             <DashboardNavbar />
 
-            <Card>
+            <Card sx={{ mx: 30 }}>
 
                 <MDBox pt={4} pb={3} px={3} mt={2}>
-                    <MDBox component="form" role="form" onSubmit={handleSubmit}>
+                    <MDBox sx={{ mx: 10 }} component="form" role="form" onSubmit={handleSubmit}>
                         <MDBox mb={2}>
                             <MDInput type="text" label="Name" variant="standard" name="name" value={values.name} onChange={handleChange} fullWidth />
                             {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
@@ -128,7 +129,7 @@ function Cover() {
                         </MDBox>
 
                         <MDBox mt={4} mb={1} sx={{ textAlign: "end" }}>
-                            <MDButton variant="gradient" color="info" small="true" onClick={handleSubmit}>
+                            <MDButton sx={{ width: "350px" }} variant="gradient" color="info" small="true" onClick={handleSubmit}>
                                 {heatingTypeId === "null" ? "Add" : "Update"}
                             </MDButton>
                         </MDBox>

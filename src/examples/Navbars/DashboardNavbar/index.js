@@ -73,6 +73,20 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   })
 
+  // const st = 'ThisIsTheStringToSplit'.split(/(?=[A-Z])/);
+  // console.log(st.replaceAll(",", " "));
+
+  route = route.map((el) => {
+    // console.log(regExp.test(el));
+    // return el !== "null" && el
+    let st = el.split(/(?=[A-Z])/).toString();
+    st = st.replace(/,/g, " ");
+    console.log(st);
+    return st;
+
+
+  })
+
 
 
 

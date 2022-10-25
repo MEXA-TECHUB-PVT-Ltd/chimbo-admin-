@@ -73,11 +73,12 @@ export const usePropertyData = async () => {
             });
             let text = "Do you want to delete?";
             if (willDelete) {
-                await swal("Deleted!", `Property Type ${name} has been deleted!`, "success");
+                // await swal("Deleted!", `Property Type ${name} has been deleted!`, "success");
                 const { data } = await deletePropertyType(id);
                 console.log(data);
                 if (data.status === 200) {
-                    window.location.reload(false);
+                    // window.location.reload(false);
+                    window.location.href = "/propertyTypes?action=done";
                     // return <Tables name="Heating Types" />
                 }
             } else {

@@ -60,12 +60,13 @@ export const useListingData = async (pageNo) => {
       });
       let text = "Do you want to delete?";
       if (willDelete) {
-        await swal("Deleted!", `This Listing has been deleted!`, "success");
+        // await swal("Deleted!", `This Listing has been deleted!`, "success");
         const { data } = await deleteListing(id);
         console.log(data);
         if (data.status === 200) {
+          window.location.href = "/listing?action=done";
           // return <Tables name="Heating Types" />
-          window.location.reload(false);
+          // window.location.reload(false);
         }
       } else {
 

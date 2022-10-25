@@ -72,12 +72,13 @@ export const useRoomCharacteristicData = async () => {
             });
             let text = "Do you want to delete?";
             if (willDelete) {
-                await swal("Deleted!", `Room Characteristic ${name} has been deleted!`, "success");
+                // await swal("Deleted!", `Room Characteristic ${name} has been deleted!`, "success");
                 const { data } = await deleteRoomCharacteristics(id);
                 console.log(data);
                 if (data.status === 200) {
                     // return <Tables name="Heating Types" />
-                    window.location.reload(false);
+                    // window.location.reload(false);
+                    window.location.href = "/roomCharacteristics?action=done";
                 }
 
             }

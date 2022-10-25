@@ -23,7 +23,10 @@ import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
-import { Typography, FormControl, Select, MenuItem, InputLabel, Radio, RadioGroup, FormControlLabel, FormLabel, FormGroup, Checkbox } from "@mui/material";
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { Typography, FormControl, Select, MenuItem, InputLabel, Radio, RadioGroup, FormControlLabel, FormLabel, FormGroup, Checkbox, TextField } from "@mui/material";
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -66,6 +69,7 @@ import { addListing } from "api";
 import { uploadImagesAndVideos } from "api";
 import swal from 'sweetalert';
 import { useRef } from "react";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 function Basic() {
     const iconDisplay = {
@@ -96,8 +100,7 @@ function Basic() {
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
     const adminDetails = JSON.parse(localStorage.getItem("AdminCredentials"));
     const navigate = useNavigate();
-
-
+    const [open1, setOpen1] = useState(false);
 
 
 
@@ -435,7 +438,7 @@ function Basic() {
                                     onChange={handleChange}
                                     name="listingTypeId"
                                     ref={listingTypeId}
-                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" }, "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }}
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
 
 
                                 >
@@ -568,7 +571,7 @@ function Basic() {
                                     onChange={handleChange}
                                     ref={floor}
                                     name="floor"
-                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" }, "& .MuiOutlinedInput-notchedOutline legend": { display: "none", } }}
+                                    sx={{ py: 1.5, '& .MuiSelect-icon': { display: "block", fontSize: "20px  !important" } }}
 
 
                                 >
@@ -810,10 +813,24 @@ function Basic() {
                     <MDBox mb={2}>
 
                         <Typography variant="string" sx={{ fontSize: "15px" }}>Available From </Typography>
-                        <MDInput type="date" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} value={values.availableFrom} ref={availableFrom} name="availableFrom" onChange={handleChange} fullWidth />
+                        <MDInput type="date" label="" sx={{ "& .MuiOutlinedInput-notchedOutline legend": { display: "none" } }} value={values.availableFrom} ref={availableFrom} name="availableFrom" onChange={handleChange} fullWidth style={{
+
+                        }} />
                         {<Typography display="block" variant="string" color="red" sx={{ fontSize: "12px" }} my={1}>
                             {errors.availableFrom}
                         </Typography>}
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DesktopDatePicker
+                                placeholder="MM/DD/YYYY"
+                                inputFormat="MM/DD/YYYY"
+                                value={values.availableFrom}
+                                onChange={handleChange}
+                                fullWidth
+                                open={open1}
+                                onClick={() => { setOpen1 = true }}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider> */}
                     </MDBox>
                     <MDBox mb={2}>
 
